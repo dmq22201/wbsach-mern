@@ -59,57 +59,50 @@ function DeleteAccountForm() {
         </Button>
       </Modal.Open>
       <Modal.Window id="deleteAccount" isCloseWhenClickOuside={false}>
-        {isSuccess ? (
-          <Popup isOpenPopup={isOpenPopup}>
-            <Popup.Window type="success">Xóa tài khoản thành công</Popup.Window>
-          </Popup>
-        ) : (
-          <div className="flex flex-col gap-6">
-            <HiOutlineExclamationTriangle className="h-20 w-20 self-center text-orange-500" />
-            <p className="font-medium text-red-500">
-              Bạn có muốn xóa tài khoản không?. Nếu có hãy nhập username bạn
-              vào.
-            </p>
+        <div className="flex flex-col gap-6">
+          <HiOutlineExclamationTriangle className="h-20 w-20 self-center text-orange-500" />
+          <p className="font-medium text-red-500">
+            Bạn có muốn xóa tài khoản không?. Nếu có hãy nhập username bạn vào.
+          </p>
 
-            {msgFromServer && (
-              <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
-            )}
+          {msgFromServer && (
+            <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
+          )}
 
-            <Form onSubmit={handleSubmit(onSubmit)} className="w-[50vw]">
-              <InputGroup>
-                <Label htmlFor="username">Tên tài khoản</Label>
-                <Input
-                  type="text"
-                  id="username"
-                  placeholder="Xin hãy nhập tên tài khoản..."
-                  autoComplete="on"
-                  disabled={isLoading}
-                  {...register("username", {
-                    required: "Vui lòng nhập tài khoản",
-                  })}
-                />
-                {errors && <InputMsg msg={errors?.username?.message} />}
-              </InputGroup>
+          <Form onSubmit={handleSubmit(onSubmit)} className="w-[50vw]">
+            <InputGroup>
+              <Label htmlFor="username">Tên tài khoản</Label>
+              <Input
+                type="text"
+                id="username"
+                placeholder="Xin hãy nhập tên tài khoản..."
+                autoComplete="on"
+                disabled={isLoading}
+                {...register("username", {
+                  required: "Vui lòng nhập tài khoản",
+                })}
+              />
+              {errors && <InputMsg msg={errors?.username?.message} />}
+            </InputGroup>
 
-              <div className="flex gap-6">
-                <Button type="warning" size="md" component="button">
-                  Đồng ý
+            <div className="flex gap-6">
+              <Button type="warning" size="md" component="button">
+                Đồng ý
+              </Button>
+              <Modal.Action>
+                <Button
+                  type="outline"
+                  size="md"
+                  canSubmit={false}
+                  component="button"
+                  toCloseModal={true}
+                >
+                  Đóng
                 </Button>
-                <Modal.Action>
-                  <Button
-                    type="outline"
-                    size="md"
-                    canSubmit={false}
-                    component="button"
-                    toCloseModal={true}
-                  >
-                    Đóng
-                  </Button>
-                </Modal.Action>
-              </div>
-            </Form>
-          </div>
-        )}
+              </Modal.Action>
+            </div>
+          </Form>
+        </div>
       </Modal.Window>
     </Modal>
   );
