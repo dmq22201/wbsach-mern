@@ -93,7 +93,7 @@ router.route("/upload-avatar").patch(
   verifyJWT,
   verifyRole(["user", "admin"]),
   fileUpload({
-    createParentPath: true,
+    // createParentPath: true,
     useTempFiles: true,
   }),
   fileExtLimiter([".png", ".jpg", ".jpeg"]),
