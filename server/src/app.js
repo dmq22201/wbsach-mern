@@ -36,7 +36,7 @@ if (process.env.NODE_ENV === "dev") {
 }
 
 // Static files
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 // Helmet
 app.use(helmet());
@@ -58,7 +58,7 @@ conn();
 // Routes
 app.get("/", (req, res) => {
   // Trả về file 'index.html' từ thư mục 'public'
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "../public", "index.html"));
 });
 app.use("/api/v1/books", bookRouter);
 app.use("/api/v1/users", userRouter);
