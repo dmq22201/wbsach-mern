@@ -74,18 +74,18 @@ function EmailForm() {
                 value: REGEX_EMAIL,
                 message: "Địa chỉ email của bạn nhập không hợp lệ",
               },
-              validate: async (fieldValue) => {
-                const response = await fetch(
-                  `http://127.0.0.1:3000/api/v1/auth/check-duplicate/?email=${fieldValue}`,
-                );
+              // validate: async (fieldValue) => {
+              //   const response = await fetch(
+              //     `http://127.0.0.1:3000/api/v1/auth/check-duplicate/?email=${fieldValue}`,
+              //   );
 
-                const data = await response.json();
+              //   const data = await response.json();
 
-                return (
-                  !data.isExist ||
-                  "Email bạn nhập đã được đăng ký với tài khoản khác. Vui lòng nhập email khác"
-                );
-              },
+              //   return (
+              //     !data.isExist ||
+              //     "Email bạn nhập đã được đăng ký với tài khoản khác. Vui lòng nhập email khác"
+              //   );
+              // },
             })}
           />
           {errors && <InputMsg msg={errors?.email?.message} />}

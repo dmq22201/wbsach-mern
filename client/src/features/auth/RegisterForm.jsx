@@ -69,18 +69,18 @@ function RegisterForm() {
                 message:
                   "Tên tài khoản tối từ 4 - 20 ký tự, chữ cái và số, không ký tự đặc biệt",
               },
-              validate: async (fieldValue) => {
-                const response = await fetch(
-                  `http://127.0.0.1:3000/api/v1/auth/check-duplicate/?username=${fieldValue}`,
-                );
+              // validate: async (fieldValue) => {
+              //   const response = await fetch(
+              //     `http://127.0.0.1:3000/api/v1/auth/check-duplicate/?username=${fieldValue}`,
+              //   );
 
-                const data = await response.json();
+              //   const data = await response.json();
 
-                return (
-                  !data.isExist ||
-                  "tên tài khoản đã được sử dụng. Vui lòng nhập tên tài khoản khác"
-                );
-              },
+              //   return (
+              //     !data.isExist ||
+              //     "tên tài khoản đã được sử dụng. Vui lòng nhập tên tài khoản khác"
+              //   );
+              // },
             })}
           />
           {errors && <InputMsg msg={errors?.username?.message} />}
@@ -114,12 +114,12 @@ function RegisterForm() {
             disabled={isLoading || isSuccess}
             {...register("passwordConfirm", {
               required: "Vui lòng nhập lại mật khẩu.",
-              validate: (fieldValue) => {
-                return (
-                  fieldValue === getValues().password ||
-                  "Nhập lại mật khẩu không khớp"
-                );
-              },
+              // validate: (fieldValue) => {
+              //   return (
+              //     fieldValue === getValues().password ||
+              //     "Nhập lại mật khẩu không khớp"
+              //   );
+              // },
             })}
           />
           {errors && <InputMsg msg={errors?.passwordConfirm?.message} />}
@@ -138,18 +138,18 @@ function RegisterForm() {
                 value: REGEX_EMAIL,
                 message: "Địa chỉ email của bạn nhập không hợp lệ",
               },
-              validate: async (fieldValue) => {
-                const response = await fetch(
-                  `http://127.0.0.1:3000/api/v1/auth/check-duplicate/?email=${fieldValue}`,
-                );
+              // validate: async (fieldValue) => {
+              //   const response = await fetch(
+              //     `http://127.0.0.1:3000/api/v1/auth/check-duplicate/?email=${fieldValue}`,
+              //   );
 
-                const data = await response.json();
+              //   const data = await response.json();
 
-                return (
-                  !data.isExist ||
-                  "Email bạn nhập đã được đăng ký với tài khoản khác. Vui lòng nhậps email khác"
-                );
-              },
+              //   return (
+              //     !data.isExist ||
+              //     "Email bạn nhập đã được đăng ký với tài khoản khác. Vui lòng nhậps email khác"
+              //   );
+              // },
             })}
           />
           {errors && <InputMsg msg={errors?.email?.message} />}
