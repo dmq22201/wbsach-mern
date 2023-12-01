@@ -45,7 +45,6 @@ function UpdatePasswordForm() {
     try {
       const res = await sendUpdateSecurityPassword(data).unwrap();
       setMsgFromServer(res);
-      setShowModalWithId("updatePasswordSuccess");
     } catch (err) {
       setMsgFromServer({
         status: err.data?.status,

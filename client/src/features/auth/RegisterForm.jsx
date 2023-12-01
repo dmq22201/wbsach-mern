@@ -197,6 +197,12 @@ function RegisterForm() {
             >
               Đã có tài khoản? Đăng nhập
             </Link>
+            <Link
+              to="/send-verify-email"
+              className="text-sm underline hover:text-violet-700 md:text-base"
+            >
+              Không nhận được email xác thực?
+            </Link>
           </div>
         </InputGroup>
       </Form>

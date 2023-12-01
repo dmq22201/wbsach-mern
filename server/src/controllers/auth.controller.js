@@ -2,6 +2,7 @@ const asyncFnHandler = require("../utils/asynFnHandler.util");
 const CustomError = require("../utils/CustomError.util");
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
+
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -9,6 +10,7 @@ const {
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const Email = require("../services/Email.service");
+const cloudinary = require("../services/cloudinary.service");
 
 /*
    * LUỒNG THỰC THI
@@ -604,26 +606,43 @@ exports.deleteAccount = asyncFnHandler(async function (req, res, next) {
 });
 
 // Chức năng: Cập nhật ảnh đại diện tài khoản khi user đã đăng nhập
+
 exports.uploadAvatar = asyncFnHandler(async function (req, res, next) {
   const { avatar } = req.files;
 
+  // chỉ lưu ở server
   const createFileName = `${Date.now()}-${req.currentUser._id.toString()}-${
     req.files.avatar.name
   }`;
+  //const createPath = `./public/users/${req.currentUser._id.toString()}/${createFileName}`;
 
-  const createPath = `./public/users/${req.currentUser._id.toString()}/${createFileName}`;
+  // avatar.mv(createPath, async function (err) {
+  //   if (err) {
+  //     return next(new CustomError("Có lỗi xảy ra...", 500));
+  //   }
 
-  avatar.mv(createPath, async function (err) {
-    if (err) {
-      return next(new CustomError("Có lỗi xảy ra...", 500));
-    }
+  //   req.currentUser.avatar = createFileName;
+  //   await req.currentUser.save({ validateModifiedOnly: true });
 
-    req.currentUser.avatar = createFileName;
-    await req.currentUser.save({ validateModifiedOnly: true });
+  //   res.status(200).json({
+  //     status: "success",
+  //     message: "Cập nhật avatar thành công",
+  //   });
+  // });
+
+  // lưu trên dịch vụ cloudinary
+
+  try {
+    const imgObj = await cloudinary(avatar.tempFilePath, "users/avatar");
+
+    req.currentUser.avatar = imgObj.url;
+    await req.currentUser.save({ validateBeforeSave: false });
 
     res.status(200).json({
       status: "success",
       message: "Cập nhật avatar thành công",
     });
-  });
+  } catch (err) {
+    console.log(err);
+  }
 });
