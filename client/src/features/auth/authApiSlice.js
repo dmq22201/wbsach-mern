@@ -49,7 +49,7 @@ const authApiSlice = apiSlice.injectEndpoints({
     }),
     getVerifyPasswordResetToken: builder.query({
       query: (passwordResetToken) =>
-        `auth/reset-password/${passwordResetToken}`,
+        `/api/v1/auth/reset-password/${passwordResetToken}`,
     }),
     sendUpdateInfo: builder.mutation({
       query: (newInfo) => ({
@@ -99,7 +99,8 @@ const authApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["CurrentUser"],
     }),
     getVerifyEmailToken: builder.query({
-      query: (emailVerifyToken) => `auth/verify-email/${emailVerifyToken}`,
+      query: (emailVerifyToken) =>
+        `/api/v1/auth/verify-email/${emailVerifyToken}`,
     }),
     sendVerifyEmail: builder.mutation({
       query: (email) => ({

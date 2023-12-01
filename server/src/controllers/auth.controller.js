@@ -171,19 +171,21 @@ exports.register = asyncFnHandler(async function (req, res, next) {
 // 1) Gửi email
 exports.sendEmailVerify = asyncFnHandler(async function (req, res, next) {
   // Trường hợp user vượt quá thời hạn, và sử dụng chức năng send email verify riêng không qua bước đăng ký
+  let verifyURL;
   if (req.body.email) {
     const foundUserInDB = await User.findOne({
       email: req.body.email,
       isVerified: false,
     });
 
-    if (!foundUserInDB)
+    if (!foundUserInDB) {
       return next(
         new CustomError(
           "Bạn đã thực hiện việc xác minh email rồi, không thể thực hiện tiếp."
         ),
         400
       );
+    }
 
     // 1) Tạo một loại token mới dành cho email verify
     const emailVerifyToken = crypto.randomBytes(64).toString("hex");
@@ -198,12 +200,12 @@ exports.sendEmailVerify = asyncFnHandler(async function (req, res, next) {
     await foundUserInDB.save({ validateBeforeSave: false });
 
     // 3) Tạo URL
-    let verifyURL;
     if (process.env.NODE_ENV === "dev") {
       verifyURL = `${process.env.DEV_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
     }
-
-    verifyURL = `${process.env.PROD_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
+    if (process.env.NODE_ENV === "prod") {
+      verifyURL = `${process.env.PROD_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
+    }
 
     // 4) gửi
     try {
@@ -234,12 +236,12 @@ exports.sendEmailVerify = asyncFnHandler(async function (req, res, next) {
     await req.newUser.save({ validateBeforeSave: false });
 
     // 3) Tạo URL
-    let verifyURL;
     if (process.env.NODE_ENV === "dev") {
       verifyURL = `${process.env.DEV_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
     }
-
-    verifyURL = `${process.env.PROD_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
+    if (process.env.NODE_ENV === "prod") {
+      verifyURL = `${process.env.PROD_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
+    }
 
     // 4) gửi
     try {
@@ -546,8 +548,9 @@ exports.updateSecurityEmail = asyncFnHandler(async function (req, res, next) {
   if (process.env.NODE_ENV === "dev") {
     verifyURL = `${process.env.DEV_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
   }
-
-  verifyURL = `${process.env.PROD_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
+  if (process.env.NODE_ENV === "prod") {
+    verifyURL = `${process.env.PROD_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
+  }
 
   // 4) gửi
   try {

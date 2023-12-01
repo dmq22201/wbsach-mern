@@ -4,6 +4,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://wbsach-api.vercel.app",
+    // baseUrl: "http://127.0.0.1:3000",
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token;
 
