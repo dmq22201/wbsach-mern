@@ -1,0 +1,40 @@
+doctype html
+html
+  head
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
+    title= subject  
+    include _style
+  body
+    table(role="presentation", border="0", cellpadding="0", cellspacing="0", class="body")
+      tr
+        td
+        td(class="container")
+          div(class="content")
+            // START CENTERED WHITE CONTAINER
+            table(role="presentation", class="main")
+              // START MAIN CONTENT AREA
+              tr
+                td(class="wrapper")
+                  table(role="presentation", border="0", cellpadding="0", cellspacing="0")
+                    tr
+                      td
+                        p Xin chào, 
+                          span(class="font-semibold") #{fullName}
+                        p Bạn đã yêu cầu chúng tôi cung cấp thông tin về tài khoản và mật khẩu của bạn. Đây là thông tin mà bạn cần.
+                        p Tên tài khoản: 
+                          span(class="font-semibold") #{username}
+                        p Ngoài ra, bạn có nhu cầu thay đổi mật khẩu thì bạn có thể ấn vào nút dưới đây.
+                        table(role="presentation", border="0", cellpadding="0", cellspacing="0", class="btn btn-primary")
+                          tbody
+                            tr
+                              td(align="left")
+                                table(role="presentation", border="0", cellpadding="0", cellspacing="0")
+                                  tbody
+                                    tr
+                                      td
+                                        a(href=`${url}`, target="_blank" class="uppercase") Thay đổi mật khẩu
+                        p(class="text-red-500 font-semibold") CHÚ Ý: Đường link thay đổi mật khẩu chỉ tồn tại trong 5 phút.
+              // END MAIN CONTENT AREA
+            // END CENTERED WHITE CONTAINER
+        td
