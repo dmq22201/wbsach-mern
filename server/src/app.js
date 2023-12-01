@@ -16,6 +16,7 @@ const bookRouter = require("./routes/book.route");
 const userRouter = require("./routes/user.route");
 const genreRouter = require("./routes/genre.route");
 const authorRouter = require("./routes/author.route");
+const authRouter = require("./routes/auth.route.js");
 
 // Khởi tạo Application
 const app = express();
@@ -64,6 +65,7 @@ app.use("/api/v1/books", bookRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/genres", genreRouter);
 app.use("/api/v1/authors", authorRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.all("*", (req, res, next) => {
   next(new CustomError(`Không tìm thấy ${req.originalUrl} trên máy chủ!`, 404));
