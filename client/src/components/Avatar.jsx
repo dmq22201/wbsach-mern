@@ -17,7 +17,7 @@ function Avatar({ currentUser, size }) {
     <EmptyAvatar size={size} />
   ) : (
     <CloudinaryContext secure>
-      <img
+      <Image
         src={currentUser.avatar}
         className={`${generalClass} ${sizes[size]}`}
         alt={`Ảnh đại diện của ${currentUser.fullName}`}
