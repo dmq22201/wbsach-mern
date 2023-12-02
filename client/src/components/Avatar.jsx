@@ -1,4 +1,5 @@
 import { EmptyAvatar } from "./Icons";
+import { CloudinaryContext, Image } from "cloudinary-react";
 
 function Avatar({ currentUser, size }) {
   const generalClass = "inline-block rounded-full object-cover";
@@ -15,11 +16,13 @@ function Avatar({ currentUser, size }) {
   return !currentUser.avatar ? (
     <EmptyAvatar size={size} />
   ) : (
-    <img
-      src={currentUser.avatar}
-      className={`${generalClass} ${sizes[size]}`}
-      alt={`Ảnh đại diện của ${currentUser.fullName}`}
-    />
+    <CloudinaryContext secure>
+      <img
+        src={currentUser.avatar}
+        className={`${generalClass} ${sizes[size]}`}
+        alt={`Ảnh đại diện của ${currentUser.fullName}`}
+      />
+    </CloudinaryContext>
   );
 }
 

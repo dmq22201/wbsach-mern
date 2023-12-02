@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.13.0",
     "@reduxjs/toolkit": "^1.9.7",
     "date-fns": "^2.30.0",
     "framer-motion": "^10.16.5",
