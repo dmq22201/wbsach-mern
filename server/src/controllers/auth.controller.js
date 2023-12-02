@@ -611,7 +611,7 @@ exports.deleteAccount = asyncFnHandler(async function (req, res, next) {
 // Chức năng: Cập nhật ảnh đại diện tài khoản khi user đã đăng nhập
 
 exports.uploadAvatar = asyncFnHandler(async function (req, res, next) {
-  const { avatar } = req.files;
+  // const { avatar } = req.files;
 
   // chỉ lưu ở server
   // const createFileName = `${Date.now()}-${req.currentUser._id.toString()}-${
@@ -636,7 +636,10 @@ exports.uploadAvatar = asyncFnHandler(async function (req, res, next) {
   // lưu trên dịch vụ cloudinary
 
   try {
-    const imgObj = await cloudinary(avatar.tempFilePath, "users/avatar");
+    const b64 = Buffer.from(req.file.buffer).toString("base64");
+    let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+
+    const imgObj = await cloudinary(dataURI, "users/avatar");
 
     req.currentUser.avatar = imgObj.secure_url;
     await req.currentUser.save({ validateBeforeSave: false });

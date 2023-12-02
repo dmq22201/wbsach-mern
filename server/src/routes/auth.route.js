@@ -1,16 +1,18 @@
 const express = require("express");
 const authController = require("../controllers/auth.controller");
 
-const fileUpload = require("express-fileupload");
-const fileSizeLimiter = require("../middlewares/fileSizeLimiter.middleware");
-const fileExtLimiter = require("../middlewares/fileExtLimiter.middleware");
 const reqLimiter = require("../middlewares/reqLimiter.middleware");
 const checkVerifyEmail = require("../middlewares/checkVerifiedEmail.middleware");
 const verifyJWT = require("../middlewares/verifyJWT.middleware");
 const verifyRole = require("../middlewares/verifyRole.middleware");
 const verifyPasswordResetToken = require("../middlewares/verifyPasswordResetToken.middleware");
 const verifyEmailToken = require("../middlewares/verifyEmailToken.middleware");
-const cors = require("cors");
+const multer = require("multer");
+
+const storage = new multer.memoryStorage();
+const upload = multer({
+  storage,
+});
 
 const router = express.Router();
 
@@ -90,16 +92,13 @@ router
     authController.deleteAccount
   );
 
-router.route("/upload-avatar").patch(
-  cors(),
-  verifyJWT,
-  verifyRole(["user", "admin"]),
-  fileUpload({
-    useTempFiles: true,
-  }),
-  fileExtLimiter([".png", ".jpg", ".jpeg"]),
-  fileSizeLimiter,
-  authController.uploadAvatar
-);
+router
+  .route("/upload-avatar")
+  .patch(
+    verifyJWT,
+    verifyRole(["user", "admin"]),
+    upload.single("avatar"),
+    authController.uploadAvatar
+  );
 
 module.exports = router;

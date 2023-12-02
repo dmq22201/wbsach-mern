@@ -26,10 +26,7 @@ function AvatarForm() {
     useSendUpdateAvatarMutation();
 
   const currentUser = useSelector(selectCurrentUser);
-  const [previewAvatar, setPreviewAvatar] = useState("");
   const [msgFromServer, setMsgFromServer] = useState(null);
-
-  const handlePreviewAvatar = (e) => {};
 
   useEffect(() => {
     if (isSuccess) {
@@ -46,6 +43,7 @@ function AvatarForm() {
       const res = await sendUpdateAvatar(formData).unwrap();
       setMsgFromServer(res);
     } catch (err) {
+      console.log(err);
       setMsgFromServer({
         status: err.data?.status,
         message: err.data?.message,
