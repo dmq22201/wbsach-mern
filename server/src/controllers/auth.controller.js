@@ -404,7 +404,14 @@ exports.forgot = asyncFnHandler(async function (req, res, next) {
   await foundUserInDB.save({ validateBeforeSave: false });
 
   // 5) Tạo URL với password Reset Token CHƯA HASH
-  const forgotURL = `${process.env.CLIENT_APP_URL}/reset-password/${passwordResetToken}`;
+
+  let forgotURL;
+  if (process.env.DEV_CLIENT_APP_URL === "dev") {
+    forgotURL = `${process.env.DEV_CLIENT_APP_URL}/reset-password/${passwordResetToken}`;
+  }
+  if (process.env.PROD_CLIENT_APP_URL === "prod") {
+    forgotURL = `${process.env.PROD_CLIENT_APP_URL}/reset-password/${passwordResetToken}`;
+  }
 
   // 6) Gửi email
   try {

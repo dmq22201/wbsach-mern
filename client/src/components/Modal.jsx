@@ -54,7 +54,7 @@ function Window({ id, children, isCloseWhenClickOuside = true }) {
     <AnimatePresence>
       {showModalWithId === id && (
         <motion.div
-          key={showModalWithId}
+          key="modal"
           className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -62,7 +62,7 @@ function Window({ id, children, isCloseWhenClickOuside = true }) {
           exit={{ opacity: 0 }}
         >
           <motion.div
-            key={showModalWithId}
+            key="modal"
             ref={ref}
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}

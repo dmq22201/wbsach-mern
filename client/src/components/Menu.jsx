@@ -69,7 +69,7 @@ function List({ id, children, size }) {
       {showMenuWithId === id && (
         <motion.ul
           ref={ref}
-          key={showMenuWithId}
+          key="menu"
           className={`absolute right-0 top-full mt-5 ${size} divide-y bg-white shadow-lg`}
           initial={{ translateY: "100%", opacity: 0 }}
           animate={{ translateY: 0, opacity: 1 }}
