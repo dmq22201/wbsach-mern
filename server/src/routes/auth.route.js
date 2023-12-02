@@ -10,6 +10,7 @@ const verifyJWT = require("../middlewares/verifyJWT.middleware");
 const verifyRole = require("../middlewares/verifyRole.middleware");
 const verifyPasswordResetToken = require("../middlewares/verifyPasswordResetToken.middleware");
 const verifyEmailToken = require("../middlewares/verifyEmailToken.middleware");
+const cors = require("cors");
 
 const router = express.Router();
 
@@ -90,10 +91,10 @@ router
   );
 
 router.route("/upload-avatar").patch(
+  cors(),
   verifyJWT,
   verifyRole(["user", "admin"]),
   fileUpload({
-    // createParentPath: true,
     useTempFiles: true,
   }),
   fileExtLimiter([".png", ".jpg", ".jpeg"]),

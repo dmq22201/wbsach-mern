@@ -50,6 +50,31 @@ function Window({ id, children, isCloseWhenClickOuside = true }) {
     return () => (document.body.style.overflow = "auto");
   }, [showModalWithId]);
 
+  // const activeClass=
+  // const inActiveClass=
+
+  // return (
+  //   <>
+  //     {showModalWithId === id && (
+  //       <div
+  //         className={`fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm transition-all ${
+  //           showModalWithId === id ? "opacity-1 scale-100" : "scale-0 opacity-0"
+  //         }`}
+  //       >
+  //         <div
+  //           className={`fixed overflow-hidden bg-white p-6 transition-all ${
+  //             showModalWithId === id
+  //               ? "opacity-1 scale-100"
+  //               : "scale-0 opacity-0"
+  //           }`}
+  //         >
+  //           {children}
+  //         </div>
+  //       </div>
+  //     )}
+  //   </>
+  // );
+
   return (
     <AnimatePresence>
       {showModalWithId === id && (

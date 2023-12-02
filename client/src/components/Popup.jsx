@@ -30,7 +30,6 @@ function Window({ type, children }) {
     <AnimatePresence>
       {isOpenPopup && (
         <motion.div
-          key="popup"
           className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
