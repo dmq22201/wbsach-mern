@@ -635,7 +635,7 @@ exports.uploadAvatar = asyncFnHandler(async function (req, res, next) {
   try {
     const imgObj = await cloudinary(avatar.tempFilePath, "users/avatar");
 
-    req.currentUser.avatar = imgObj.url;
+    req.currentUser.avatar = imgObj.secure_url;
     await req.currentUser.save({ validateBeforeSave: false });
 
     res.status(200).json({
