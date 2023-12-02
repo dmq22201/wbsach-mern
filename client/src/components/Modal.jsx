@@ -9,10 +9,12 @@ function Modal({ children }) {
 
   const openModal = (id) => {
     setShowModalWithId(id);
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setShowModalWithId("");
+    document.body.style.overflow = "auto";
   };
 
   return (
@@ -48,7 +50,7 @@ function Window({ id, children, isCloseWhenClickOuside = true }) {
     }
 
     return () => (document.body.style.overflow = "auto");
-  }, [showModalWithId]);
+  }, [showModalWithId, id]);
 
   // const activeClass=
   // const inActiveClass=
@@ -76,25 +78,26 @@ function Window({ id, children, isCloseWhenClickOuside = true }) {
   // );
 
   return (
-    <AnimatePresence>
-      {showModalWithId && (
-        <motion.div
-          className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ type: "just" }}
-          exit={{ opacity: 0 }}
-        >
+    <AnimatePresence key="modal">
+      {showModalWithId === id && (
+        <motion.div key="modal">
           <motion.div
-            key="modal"
-            ref={ref}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
+            className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ type: "just" }}
-            exit={{ opacity: 0, scale: 0 }}
-            className="fixed overflow-hidden bg-white p-6"
+            exit={{ opacity: 0 }}
           >
-            {children}
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "just" }}
+              exit={{ opacity: 0, scale: 0 }}
+              className="fixed overflow-hidden bg-white p-6"
+            >
+              {children}
+            </motion.div>
           </motion.div>
         </motion.div>
       )}

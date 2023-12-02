@@ -73,7 +73,7 @@ function Content({ children }) {
   }, [showSidebar]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence key="sidebar">
       {showSidebar && (
         <motion.div
           key="sidebar"
@@ -85,7 +85,6 @@ function Content({ children }) {
         >
           <motion.div
             ref={ref}
-            key="sidebar"
             className="fixed bottom-0 right-0 top-0 w-[80vw] overflow-auto bg-white shadow"
             initial={{ opacity: 0, translateX: "100%" }}
             animate={{ translateX: 0, opacity: 1 }}

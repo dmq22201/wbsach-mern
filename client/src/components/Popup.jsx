@@ -27,9 +27,10 @@ function Window({ type, children }) {
   }, [isOpenPopup]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence key="popup">
       {isOpenPopup && (
         <motion.div
+          key="popup"
           className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -37,7 +38,6 @@ function Window({ type, children }) {
           exit={{ opacity: 0 }}
         >
           <motion.div
-            key="popup"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "just" }}
