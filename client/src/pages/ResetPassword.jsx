@@ -2,7 +2,7 @@ import { useParams, Navigate } from "react-router-dom";
 import { selectCurrentUser } from "../features/auth/authSlice";
 import { useGetVerifyPasswordResetTokenQuery } from "../features/auth/authApiSlice";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import ResetPasswordForm from "../features/auth/ResetPasswordForm";
 import SpinnerIcon from "../components/SpinnerIcon";
