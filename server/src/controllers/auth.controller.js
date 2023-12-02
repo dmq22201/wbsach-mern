@@ -81,7 +81,7 @@ exports.login = asyncFnHandler(async function (req, res, next) {
   if (!foundRefreshTokenInDB) {
     newRefreshTokenArrInDB = [];
   }
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  res.clearCookie("jwt", { httpOnly: true, secure: true });
 
   // 11) Áp dụng DANH SÁCH Refresh token đã tính toán vào database đè lên DANH SÁCH CŨ (có thể mới, có thể vẫn như cũ)
   foundUserInDB.refreshToken = [...newRefreshTokenArrInDB, newRefreshToken];
@@ -93,7 +93,6 @@ exports.login = asyncFnHandler(async function (req, res, next) {
   res.cookie("jwt", newRefreshToken, {
     httpOnly: true,
     secure: true, // https. Trong Development ta để false
-    sameSite: "None",
     maxAge: 1 * 24 * 60 * 60 * 1000, // phải khớp với thời gian trong refreshToken
   });
 
@@ -119,7 +118,7 @@ exports.logout = asyncFnHandler(async function (req, res, next) {
   // 2) Nếu không có refresh token trong cookies trả về phản hồi luôn, đồng thời xóa cookie phía client
   const oldRefreshToken = cookies?.jwt;
   if (!oldRefreshToken) {
-    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+    res.clearCookie("jwt", { httpOnly: true, secure: true });
     return res.sendStatus(204);
   }
 
@@ -128,7 +127,7 @@ exports.logout = asyncFnHandler(async function (req, res, next) {
 
   // 4) Nếu không tìm thì user liên kết với refresh token này thì xóa cookie ở phía client
   if (!foundUserInDB) {
-    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+    res.clearCookie("jwt", { httpOnly: true, secure: true });
     return res.sendStatus(204);
   }
 
@@ -144,7 +143,6 @@ exports.logout = asyncFnHandler(async function (req, res, next) {
   res.clearCookie("jwt", {
     httpOnly: true,
     secure: true,
-    sameSite: "None",
   });
 
   res.sendStatus(204);
@@ -294,7 +292,7 @@ exports.refresh = asyncFnHandler(async function (req, res, next) {
   }
 
   // 3) Xóa cookie phía user để sau này ta gửi cookie mới về
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  res.clearCookie("jwt", { httpOnly: true, secure: true });
 
   // 4) Tìm user trong database dựa trên refresh token
   const foundUserInDB = await User.findOne({ refreshToken: oldRefreshToken });
@@ -352,7 +350,6 @@ exports.refresh = asyncFnHandler(async function (req, res, next) {
       res.cookie("jwt", newRefreshToken, {
         httpOnly: true,
         secure: true, // https
-        sameSite: "None",
         maxAge: 1 * 24 * 60 * 60 * 1000, // phải khớp với thời gian trong refreshToken
       });
 
@@ -406,10 +403,10 @@ exports.forgot = asyncFnHandler(async function (req, res, next) {
   // 5) Tạo URL với password Reset Token CHƯA HASH
 
   let forgotURL;
-  if (process.env.DEV_CLIENT_APP_URL === "dev") {
+  if (process.env.NODE_ENV === "dev") {
     forgotURL = `${process.env.DEV_CLIENT_APP_URL}/reset-password/${passwordResetToken}`;
   }
-  if (process.env.PROD_CLIENT_APP_URL === "prod") {
+  if (process.env.NODE_ENV === "prod") {
     forgotURL = `${process.env.PROD_CLIENT_APP_URL}/reset-password/${passwordResetToken}`;
   }
 
@@ -439,8 +436,7 @@ exports.resetPassword = asyncFnHandler(async function (req, res, next) {
   const oldRefreshToken = cookies?.jwt;
 
   // 2) Nếu có cookies thì xóa
-  if (oldRefreshToken)
-    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  if (oldRefreshToken) res.clearCookie("jwt", { httpOnly: true, secure: true });
 
   // 3) thay đổi mật khẩu
   req.currentUser.password = req.body.password;
