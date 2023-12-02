@@ -77,7 +77,7 @@ function Window({ id, children, isCloseWhenClickOuside = true }) {
 
   return (
     <AnimatePresence>
-      {showModalWithId === id && (
+      {showModalWithId && (
         <motion.div
           className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm"
           initial={{ opacity: 0 }}
