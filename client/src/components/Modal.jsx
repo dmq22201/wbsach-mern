@@ -27,21 +27,23 @@ function Modal({ children }) {
 function Open({ children, id }) {
   const { openModal } = useContext(ModalContext);
 
-  if (children.type.name === "Button") {
-    return React.cloneElement(children, {
-      onClick: () => openModal(id),
-    });
-  }
+  // if (children.type.name === "Button") {
+  //   return React.cloneElement(children, {
+  //     onClick: () => openModal(id),
+  //   });
+  // }
 
-  return children;
+  // return children;
+
+  return cloneElement(children, {
+    onClick: () => openModal(id),
+  });
 }
 
 function Window({ id, children, isCloseWhenClickOuside = true }) {
   const { showModalWithId, closeModal } = useContext(ModalContext);
 
   const ref = useCloseWhenClickOutSide(() => {
-    console.log(`RUN?`);
-    console.log(showModalWithId);
     if (!isCloseWhenClickOuside) return;
     closeModal();
   }, false);

@@ -7,12 +7,8 @@ const verifyJWT = require("../middlewares/verifyJWT.middleware");
 const verifyRole = require("../middlewares/verifyRole.middleware");
 const verifyPasswordResetToken = require("../middlewares/verifyPasswordResetToken.middleware");
 const verifyEmailToken = require("../middlewares/verifyEmailToken.middleware");
-const multer = require("multer");
 
-const storage = new multer.memoryStorage();
-const upload = multer({
-  storage,
-});
+const multerErrorHandler = require("../middlewares/multerErrorHandler.middleware");
 
 const router = express.Router();
 
@@ -97,7 +93,7 @@ router
   .patch(
     verifyJWT,
     verifyRole(["user", "admin"]),
-    upload.single("avatar"),
+    multerErrorHandler,
     authController.uploadAvatar
   );
 

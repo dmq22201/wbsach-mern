@@ -1,12 +1,9 @@
-import {
-  HiOutlineExclamationTriangle,
-  HiOutlineCheckCircle,
-} from "react-icons/hi2";
+import { HiOutlineExclamationTriangle } from "react-icons/hi2";
 import { useSendConfirmDeleteAccountMutation } from "./authApiSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setLogout } from "./authSlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Modal from "../../components/Modal";
@@ -16,7 +13,6 @@ import Form from "../../components/Form";
 import Label from "../../components/Label";
 import InputGroup from "../../components/InputGroup";
 import Input from "../../components/Input";
-import Popup from "../../components/Popup";
 
 function DeleteAccountForm() {
   const {
@@ -29,7 +25,6 @@ function DeleteAccountForm() {
     useSendConfirmDeleteAccountMutation();
 
   const [msgFromServer, setMsgFromServer] = useState(null);
-  const [isOpenPopup, setIsOpenPopup] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,7 +33,6 @@ function DeleteAccountForm() {
     try {
       const res = await sendConfirmDeleteAccount(data).unwrap();
       setMsgFromServer(res);
-      setIsOpenPopup(true);
       setTimeout(() => {
         dispatch(setLogout());
         navigate("/home");
