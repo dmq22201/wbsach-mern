@@ -46,7 +46,7 @@ function Window({ id, children, isCloseWhenClickOuside = true }) {
   const ref = useCloseWhenClickOutSide(() => {
     if (!isCloseWhenClickOuside) return;
     closeModal();
-  }, false);
+  }, true);
 
   useEffect(() => {
     if (showModalWithId === id) {
@@ -114,7 +114,8 @@ function Action({ children }) {
   return (
     <div className="flex gap-6">
       {React.Children.map(children, (child) => {
-        if (child.type.name === "Button" && child.props.toCloseModal === true) {
+        console.log(child);
+        if (child.props.toCloseModal === true) {
           return React.cloneElement(child, {
             onClick: () => closeModal(),
           });
