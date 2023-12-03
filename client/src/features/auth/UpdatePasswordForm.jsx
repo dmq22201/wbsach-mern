@@ -56,7 +56,7 @@ function UpdatePasswordForm() {
   return (
     <div className="flex w-full flex-col gap-6">
       <span className="text-xl font-semibold uppercase">Mật khẩu</span>
-      {msgFromServer && !isDirty && (
+      {msgFromServer && (
         <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
       )}
       <Form onSubmit={handleSubmit(onSubmit)}>

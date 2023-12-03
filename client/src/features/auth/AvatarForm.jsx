@@ -56,7 +56,7 @@ function AvatarForm() {
       <span className="text-base font-medium uppercase sm:text-2xl">
         Ảnh đại diện
       </span>
-      {msgFromServer && !isDirty && (
+      {msgFromServer && (
         <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
       )}
       <div className="flex flex-col items-center gap-8 md:flex-row">

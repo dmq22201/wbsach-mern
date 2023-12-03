@@ -61,7 +61,7 @@ function InformationForm() {
     <div className="flex w-full flex-col gap-4">
       <span className="text-xl font-medium uppercase">Thông tin cá nhân</span>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {msgFromServer && !isDirty && (
+        {msgFromServer && (
           <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
         )}
         <InputGroup>

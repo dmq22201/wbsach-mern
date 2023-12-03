@@ -56,7 +56,7 @@ function EmailForm() {
   return (
     <div className="flex w-full flex-col gap-4">
       <span className="text-xl font-medium uppercase">Địa chỉ email</span>
-      {msgFromServer && !isDirty && (
+      {msgFromServer && (
         <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
       )}
 
