@@ -71,7 +71,7 @@ function DeleteAccountForm() {
                 id="username"
                 placeholder="Xin hãy nhập tên tài khoản..."
                 autoComplete="on"
-                disabled={isLoading}
+                disabled={isLoading || isSuccess}
                 {...register("username", {
                   required: "Vui lòng nhập tài khoản",
                 })}
@@ -80,7 +80,12 @@ function DeleteAccountForm() {
             </InputGroup>
 
             <div className="flex gap-6">
-              <Button type="warning" size="md" component="button">
+              <Button
+                type="warning"
+                size="md"
+                component="button"
+                disabled={isLoading || isSuccess}
+              >
                 Đồng ý
               </Button>
               <Modal.Action>
@@ -90,6 +95,7 @@ function DeleteAccountForm() {
                   canSubmit={false}
                   component="button"
                   toCloseModal={true}
+                  disabled={isLoading || isSuccess}
                 >
                   Đóng
                 </Button>
