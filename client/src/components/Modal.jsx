@@ -35,7 +35,7 @@ function Open({ children, id }) {
 
   // return children;
 
-  return cloneElement(children, {
+  return React.cloneElement(children, {
     onClick: () => openModal(id),
   });
 }
