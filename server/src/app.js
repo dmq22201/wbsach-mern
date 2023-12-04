@@ -17,6 +17,7 @@ const userRouter = require("./routes/user.route");
 const genreRouter = require("./routes/genre.route");
 const authorRouter = require("./routes/author.route");
 const authRouter = require("./routes/auth.route.js");
+const corsOptions = require("./configs/corsOptions.config.js");
 
 // Khởi tạo Application
 const app = express();
@@ -24,13 +25,7 @@ const app = express();
 // Khởi tạo Middleware (Thứ tự rất quan trọng)
 
 // CORS
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-    optionsSuccessStatus: 200,
-  })
-);
+app.use(cors(corsOptions));
 
 // Dev Logs
 if (process.env.NODE_ENV === "dev") {

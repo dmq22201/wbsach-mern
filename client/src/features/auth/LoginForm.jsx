@@ -11,6 +11,7 @@ import Label from "../../components/Label";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import InputMsg from "../../components/InputMsg";
+import usePersist from "../../hooks/usePersist";
 
 function LoginForm() {
   const {
@@ -21,6 +22,7 @@ function LoginForm() {
 
   const [sendLogin, { isLoading, isSuccess }] = useSendLoginMutation();
   const [msgFromServer, setMsgFromServer] = useState(null);
+  const [persist, setPersist] = usePersist();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -82,7 +84,8 @@ function LoginForm() {
                 value="persist"
                 type="checkbox"
                 disabled={isLoading || isSuccess}
-                {...register("persist")}
+                checked={persist}
+                onChange={() => setPersist((prev) => !prev)}
               />
               <span>Ghi nhớ đăng nhập</span>
             </div>

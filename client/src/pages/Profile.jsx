@@ -2,9 +2,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { useGetProfileQuery } from "../features/auth/authApiSlice";
 
 function Profile() {
-  const { data, isFetching, isSuccess } = useGetProfileQuery(undefined, {
-    pollingInterval: 5000,
-  });
+  const { data, isFetching, isSuccess } = useGetProfileQuery();
 
   return (
     <div className="flex min-h-screen w-full flex-col gap-20 divide-y bg-white p-8 lg:grid lg:grid-cols-[17.625rem,1fr] lg:divide-x lg:divide-y-0">
@@ -28,16 +26,6 @@ function Profile() {
           }
         >
           Bảo mật tài khoản
-        </NavLink>
-        <NavLink
-          to="shipping-address"
-          className={({ isActive }) =>
-            isActive
-              ? "flex-shrink-0 snap-center bg-violet-500 p-4 text-white"
-              : "flex-shrink-0 snap-center p-4 transition-all hover:bg-gray-100"
-          }
-        >
-          Danh sách địa chỉ nhận hàng
         </NavLink>
         <NavLink
           to="order-history"

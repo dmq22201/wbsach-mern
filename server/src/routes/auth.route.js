@@ -34,7 +34,7 @@ router
   .route("/verify-email/:emailVerifyToken")
   .get(verifyEmailToken, authController.verifyingEmail);
 
-router.route("/refresh").post(authController.refresh);
+router.route("/refresh").get(authController.refresh);
 router.route("/check-duplicate").get(authController.checkDuplicate);
 
 router

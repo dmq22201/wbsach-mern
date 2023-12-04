@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { setUserInfo } from "./authSlice";
+import { setCredientials, setUserInfo } from "./authSlice";
 
 const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,11 +23,20 @@ const authApiSlice = apiSlice.injectEndpoints({
         body: account,
       }),
     }),
-    sendRefreshToken: builder.mutation({
+    getRefreshToken: builder.mutation({
       query: () => ({
         url: "/api/v1/auth/refresh",
-        method: "POST",
+        method: "GET",
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          const { accessToken, user } = data;
+          dispatch(setCredientials({ accessToken, user }));
+        } catch (err) {
+          console.log(err);
+        }
+      },
       invalidatesTags: ["CurrentUser"],
     }),
     sendForgot: builder.mutation({
@@ -116,7 +125,7 @@ export const {
   useSendLoginMutation,
   useSendLogoutMutation,
   useSendRegisterMutation,
-  useSendRefreshTokenMutation,
+  useGetRefreshTokenMutation,
   useSendForgotMutation,
   useSendResetPasswordMutation,
   useGetVerifyPasswordResetTokenQuery,

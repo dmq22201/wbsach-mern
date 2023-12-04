@@ -81,7 +81,7 @@ exports.login = asyncFnHandler(async function (req, res, next) {
   if (!foundRefreshTokenInDB) {
     newRefreshTokenArrInDB = [];
   }
-  res.clearCookie("jwt", { httpOnly: true, secure: true });
+  res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
 
   // 11) Áp dụng DANH SÁCH Refresh token đã tính toán vào database đè lên DANH SÁCH CŨ (có thể mới, có thể vẫn như cũ)
   foundUserInDB.refreshToken = [...newRefreshTokenArrInDB, newRefreshToken];
@@ -94,6 +94,7 @@ exports.login = asyncFnHandler(async function (req, res, next) {
     httpOnly: true,
     secure: true, // https. Trong Development ta để false
     maxAge: 1 * 24 * 60 * 60 * 1000, // phải khớp với thời gian trong refreshToken
+    sameSite: "None",
   });
 
   res.status(200).json({
@@ -118,7 +119,7 @@ exports.logout = asyncFnHandler(async function (req, res, next) {
   // 2) Nếu không có refresh token trong cookies trả về phản hồi luôn, đồng thời xóa cookie phía client
   const oldRefreshToken = cookies?.jwt;
   if (!oldRefreshToken) {
-    res.clearCookie("jwt", { httpOnly: true, secure: true });
+    res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
     return res.sendStatus(204);
   }
 
@@ -127,7 +128,7 @@ exports.logout = asyncFnHandler(async function (req, res, next) {
 
   // 4) Nếu không tìm thì user liên kết với refresh token này thì xóa cookie ở phía client
   if (!foundUserInDB) {
-    res.clearCookie("jwt", { httpOnly: true, secure: true });
+    res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
     return res.sendStatus(204);
   }
 
@@ -143,6 +144,7 @@ exports.logout = asyncFnHandler(async function (req, res, next) {
   res.clearCookie("jwt", {
     httpOnly: true,
     secure: true,
+    sameSite: "None",
   });
 
   res.sendStatus(204);
@@ -281,18 +283,17 @@ exports.verifyingEmail = asyncFnHandler(async function (req, res, next) {
 
 // Chức năng: Cấp lại access token
 exports.refresh = asyncFnHandler(async function (req, res, next) {
-  // 1) Quét cookies trong req
   const cookies = req.cookies;
-
-  // 2) Nếu không có refresh token trong cookies trả về lỗi
+  // 1) Trích xuất refresh token nằm trong cookies
   const oldRefreshToken = cookies?.jwt;
 
+  // 2) Không có refresh token trả về lỗi
   if (!oldRefreshToken) {
     return next(new CustomError("Xác thực thất bại", 401));
   }
 
   // 3) Xóa cookie phía user để sau này ta gửi cookie mới về
-  res.clearCookie("jwt", { httpOnly: true, secure: true });
+  res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
 
   // 4) Tìm user trong database dựa trên refresh token
   const foundUserInDB = await User.findOne({ refreshToken: oldRefreshToken });
@@ -303,21 +304,18 @@ exports.refresh = asyncFnHandler(async function (req, res, next) {
       oldRefreshToken,
       process.env.REFRESH_TOKEN_SECRET,
       async function (err, decoded) {
-        // 5.0) Nếu có lỗi xảy ra. Thì lỗi có thể là Refresh token bị thay đổi trái phép
         if (err) {
-          return next(new CustomError("Xác thực thất bại", 401));
+          return next(new CustomError("Forbidden", 403));
         }
 
-        // 5.1) Hacker đang cố truy cập 1 tài khoản = refresh token tuy nhiên Ta vẫn phải phân tích refresh token bị đánh cắp để xác nhận user nào đang bị tấn công
         const hackedUser = await User.findById(decoded.userId);
 
-        // 5.2) Xóa toàn bộ refresh token mà user đang bị tấn công( kể cả khi user đó đang online trên các thiết bị khác. NGHĨA là user sẽ bị logout trên toàn bộ thiết bị)
         hackedUser.refreshToken = [];
         await hackedUser.save({ validateBeforeSave: false });
       }
     );
 
-    return next(new CustomError("Xác thực thất bại", 401));
+    return next(new CustomError("Forbidden", 403));
   }
 
   // 6) Trường hợp này ta nhận refresh token nhưng refresh token tồn tại trong ảng refreshToken của 1 user
@@ -332,11 +330,14 @@ exports.refresh = asyncFnHandler(async function (req, res, next) {
     oldRefreshToken,
     process.env.REFRESH_TOKEN_SECRET,
     async function (err, decoded) {
-      // 7.1) Lỗi trường hợp XẢY RA CÙNG LÚC. Nghĩa là refresh token vừa hết hạn đúng lúc ta tìm thấy user trong database
-      if (err || decoded.userId !== foundUserInDB._id.toString()) {
+      if (err) {
         foundUserInDB.refreshToken = [...newRefreshTokenArrInDB];
         await foundUserInDB.save({ validateBeforeSave: false });
-        return next(new CustomError("Xác thực thất bại", 401));
+      }
+
+      // 7.1) Lỗi trường hợp XẢY RA CÙNG LÚC. Nghĩa là refresh token vừa hết hạn đúng lúc ta tìm thấy user trong database
+      if (err || decoded.userId !== foundUserInDB._id.toString()) {
+        return next(new CustomError("Forbidden", 403));
       }
 
       //  7.2 Tạo mới accessToken và refresh token gửi về cho user
@@ -351,6 +352,7 @@ exports.refresh = asyncFnHandler(async function (req, res, next) {
         httpOnly: true,
         secure: true, // https
         maxAge: 1 * 24 * 60 * 60 * 1000, // phải khớp với thời gian trong refreshToken
+        sameSite: "None",
       });
 
       res.status(200).json({
@@ -436,7 +438,8 @@ exports.resetPassword = asyncFnHandler(async function (req, res, next) {
   const oldRefreshToken = cookies?.jwt;
 
   // 2) Nếu có cookies thì xóa
-  if (oldRefreshToken) res.clearCookie("jwt", { httpOnly: true, secure: true });
+  if (oldRefreshToken)
+    res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
 
   // 3) thay đổi mật khẩu
   req.currentUser.password = req.body.password;
@@ -609,7 +612,6 @@ exports.deleteAccount = asyncFnHandler(async function (req, res, next) {
 });
 
 // Chức năng: Cập nhật ảnh đại diện tài khoản khi user đã đăng nhập
-
 exports.uploadAvatar = asyncFnHandler(async function (req, res, next) {
   // const { avatar } = req.files;
 

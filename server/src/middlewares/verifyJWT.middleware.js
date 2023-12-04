@@ -24,7 +24,7 @@ const verifyJWT = asyncFnHandler(async function (req, res, next) {
     process.env.ACCESS_TOKEN_SECRET,
     async function (err, decoded) {
       if (err) {
-        return next(new CustomError("Xác thực thất bại", 401));
+        return next(new CustomError("Forbidden", 403));
       }
 
       const foundUserInDB = await User.findById(decoded.userId);

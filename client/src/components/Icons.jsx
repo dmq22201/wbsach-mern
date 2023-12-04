@@ -31,9 +31,11 @@ export function EmptyAvatar({ size }) {
   };
 
   return (
-    <div className="relative h-10 w-10 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600">
+    <div
+      className={`overflow-hidden rounded-full bg-gray-100 dark:bg-gray-600 ${sizes[size]}`}
+    >
       <svg
-        className="absolute -left-1 h-12 w-12 text-gray-400"
+        className={`text-gray-400 ${sizes[size]}`}
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"

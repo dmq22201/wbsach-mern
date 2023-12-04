@@ -16,6 +16,22 @@ function MsgPage({ msgFromServer }) {
     error: "text-red-500 font-semibold",
   };
 
+  let stateClass;
+  let stateIcon;
+  if (msgFromServer?.status === "success") {
+    stateClass = statesClass["success"];
+    stateIcon = statesIcon["success"];
+  } else if (msgFromServer?.status === "fail") {
+    stateClass = statesClass["error"];
+    stateIcon = statesIcon["error"];
+  } else if (msgFromServer?.status === "error") {
+    stateClass = statesClass["error"];
+    stateIcon = statesIcon["error"];
+  } else {
+    stateClass = statesClass["error"];
+    stateIcon = statesIcon["error"];
+  }
+
   return (
     <div className="flex items-center">
       <div className="mx-auto flex flex-col gap-6 rounded-lg bg-white p-8 shadow-md md:w-[39.75rem]">
@@ -26,18 +42,8 @@ function MsgPage({ msgFromServer }) {
           </div>
         </Link>
         <div className="flex flex-col items-center justify-center gap-8">
-          {msgFromServer.status === "success"
-            ? statesIcon["success"]
-            : statesIcon["error"]}
-          <p
-            className={
-              msgFromServer.status === "success"
-                ? statesClass["success"]
-                : statesClass["error"]
-            }
-          >
-            {msgFromServer.message}
-          </p>
+          {stateIcon}
+          <p className={stateClass}>{msgFromServer?.message}</p>
         </div>
       </div>
     </div>
