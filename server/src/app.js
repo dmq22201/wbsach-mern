@@ -22,21 +22,25 @@ const corsOptions = require("./configs/corsOptions.config.js");
 // Khởi tạo Application
 const app = express();
 
+// Lắng nghe sự kiện uncaughtException. Nghĩa là các lỗi xảy ra như là đọc biến không tồn tại chẳng hạn
+process.on("uncaughtException", (err) => {
+  process.exit(1);
+});
+
 // Khởi tạo Middleware (Thứ tự rất quan trọng)
+// Helmet
+app.use(helmet());
 
 // CORS
 app.use(cors(corsOptions));
 
 // Dev Logs
-if (process.env.NODE_ENV === "dev") {
+if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
 
 // Static files
 app.use(express.static(path.join(__dirname, "../public")));
-
-// Helmet
-app.use(helmet());
 
 // Body parser, đọc dữ liệu từ body
 app.use(express.json({ limit: "10kb" }));

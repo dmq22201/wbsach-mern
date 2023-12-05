@@ -1,11 +1,11 @@
 const CustomError = require("../utils/CustomError.util");
+const logger = require("../utils/logger.util");
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 // * KHU VỰC XỬ LÝ LỖI CỤ THỂ * //
 // ! CSDL
 function handleCastErrorDB(err) {
   const msg = `Lỗi chuyển đổi kiểu dữ liệu. ${err.path}: ${err.value}.`;
-
   return new CustomError(msg, 400);
 }
 
@@ -37,6 +37,7 @@ function handleJWTExpired(err) {
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 // * Hàm gửi json mô tả lỗi ở development
 function sendErrDev(err, res) {
+  logger.error(err);
   res.status(err.statusCode).json({
     status: err.status,
     error: err,
@@ -47,6 +48,7 @@ function sendErrDev(err, res) {
 
 // * Hàm gửi json mô tả lỗi ở production
 function sendErrProd(err, res) {
+  logger.error(err);
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
@@ -69,9 +71,9 @@ module.exports = function (err, req, res, next) {
 
   // ! Đối với "Development" ta muốn có thông tin về lỗi NHIỀU NHẤT CÓ THỂ
   // ! Đối với "Production" ta muốn ẩn đi thông tin về lỗi NHIỀU NHẤT CÓ THỂ và Response một dòng tin nhắn friendly với user
-  if (process.env.NODE_ENV === "dev") {
+  if (process.env.NODE_ENV === "development") {
     sendErrDev(err, res);
-  } else if (process.env.NODE_ENV === "prod") {
+  } else if (process.env.NODE_ENV === "production") {
     // Copy object Error (Chú ý vài thuộc tính KHÔNG ĐẾM ĐƯỢC)
     let handleSpecificErr = Object.create(err);
 

@@ -31,7 +31,6 @@ const PersistLogin = () => {
           await sendRefreshToken().unwrap();
           setTrueSuccess(true);
         } catch (err) {
-          console.log(err);
           setMsgFromServer({
             status: err.data?.status,
             message: err.data?.message,
@@ -56,7 +55,7 @@ const PersistLogin = () => {
     content = <Outlet />;
   } else if (persist && isLoading) {
     // ghi nhớ đăng nhập có nhưng token: đang được fetching
-    content = <SpinnerIcon size="xl" center />;
+    content = <SpinnerIcon size="xl" center={true} />;
   } else if (persist && isSuccess) {
     // ghi nhớ đăng nhập có nhưng token: fetch thành công
     content = <Outlet />;

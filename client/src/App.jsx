@@ -23,8 +23,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route element={<PersistLogin />}>
+        <Route element={<PersistLogin />}>
+          <Route path="/" element={<AppLayout />}>
             {/* Public routes */}
             <Route element={<PublicRoute />}>
               <Route index element={<Navigate replace to="home" />} />

@@ -14,7 +14,6 @@ const router = express.Router();
 
 router.route("/login").post(checkVerifyEmail, authController.login);
 router.route("/logout").post(authController.logout);
-
 router
   .route("/register")
   .post(authController.register, authController.sendEmailVerify);

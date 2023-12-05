@@ -114,7 +114,6 @@ function Action({ children }) {
   return (
     <div className="flex gap-6">
       {React.Children.map(children, (child) => {
-        console.log(child);
         if (child.props.toCloseModal === true) {
           return React.cloneElement(child, {
             onClick: () => closeModal(),

@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredientials, setLogout } from "../auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://wbsach-api.vercel.app",
-  //baseUrl: "http://127.0.0.1:3000",
+  //baseUrl: "https://wbsach-api.vercel.app",
+  baseUrl: "http://127.0.0.1:3000",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;

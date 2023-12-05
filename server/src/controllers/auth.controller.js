@@ -2,7 +2,6 @@ const asyncFnHandler = require("../utils/asynFnHandler.util");
 const CustomError = require("../utils/CustomError.util");
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
-
 const {
   generateAccessToken,
   generateRefreshToken,
@@ -202,10 +201,10 @@ exports.sendEmailVerify = asyncFnHandler(async function (req, res, next) {
     await foundUserInDB.save({ validateBeforeSave: false });
 
     // 3) Tạo URL
-    if (process.env.NODE_ENV === "dev") {
+    if (process.env.NODE_ENV === "development") {
       verifyURL = `${process.env.DEV_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
     }
-    if (process.env.NODE_ENV === "prod") {
+    if (process.env.NODE_ENV === "production") {
       verifyURL = `${process.env.PROD_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
     }
 
@@ -238,10 +237,10 @@ exports.sendEmailVerify = asyncFnHandler(async function (req, res, next) {
     await req.newUser.save({ validateBeforeSave: false });
 
     // 3) Tạo URL
-    if (process.env.NODE_ENV === "dev") {
+    if (process.env.NODE_ENV === "development") {
       verifyURL = `${process.env.DEV_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
     }
-    if (process.env.NODE_ENV === "prod") {
+    if (process.env.NODE_ENV === "production") {
       verifyURL = `${process.env.PROD_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
     }
 
@@ -405,10 +404,10 @@ exports.forgot = asyncFnHandler(async function (req, res, next) {
   // 5) Tạo URL với password Reset Token CHƯA HASH
 
   let forgotURL;
-  if (process.env.NODE_ENV === "dev") {
+  if (process.env.NODE_ENV === "development") {
     forgotURL = `${process.env.DEV_CLIENT_APP_URL}/reset-password/${passwordResetToken}`;
   }
-  if (process.env.NODE_ENV === "prod") {
+  if (process.env.NODE_ENV === "production") {
     forgotURL = `${process.env.PROD_CLIENT_APP_URL}/reset-password/${passwordResetToken}`;
   }
 
@@ -553,10 +552,10 @@ exports.updateSecurityEmail = asyncFnHandler(async function (req, res, next) {
 
   // 3) Tạo URL
   let verifyURL;
-  if (process.env.NODE_ENV === "dev") {
+  if (process.env.NODE_ENV === "development") {
     verifyURL = `${process.env.DEV_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
   }
-  if (process.env.NODE_ENV === "prod") {
+  if (process.env.NODE_ENV === "production") {
     verifyURL = `${process.env.PROD_CLIENT_APP_URL}/verify-email/${emailVerifyToken}`;
   }
 
