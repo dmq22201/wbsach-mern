@@ -1,9 +1,10 @@
 const app = require("./src/app");
-const logger = require("./src/utils/logger.util");
+// const logger = require("./src/utils/logger.util");
 
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, function () {
-  logger.info(`Server đang chạy cổng: ${PORT}`);
+  // logger.info(`Server đang chạy cổng: ${PORT}`);
+  console.log(`Server đang chạy cổng: ${PORT}`);
 });
 
 // Xử lý lỗi xảy ra bên ngoài ExpressJS
@@ -12,7 +13,8 @@ const server = app.listen(PORT, function () {
 // server.close() would stop the server, but not the app so if you had other code running then it'd still be executed. process.exit() stops the process completely which stops everything.
 process.on("unhandledRejection", (reason, promise) => {
   server.close(() => {
-    logger.error("Có lỗi Unhandled Rejection: Bắt đầu tắt úng dụng...");
+    // logger.error("Có lỗi Unhandled Rejection: Bắt đầu tắt úng dụng...");
+    console.log(`Có lỗi Unhandled Rejection: Bắt đầu tắt úng dụng...`);
     process.exit(1);
   });
 });
@@ -21,17 +23,17 @@ process.on("unhandledRejection", (reason, promise) => {
 // process.exit(0) tắt ứng dụng mà không xảy ra lỗi nào hết
 // process.exit(1) tắt ứng dụng ngay lập tức khi gặp lỗi
 process.on("SIGINT", () => {
-  logger.info("Nhận được tín hiệu: SIGINT. Bắt đầu tắt máy chủ.....");
+  // logger.info("Nhận được tín hiệu: SIGINT. Bắt đầu tắt máy chủ.....");
   server.close(() => {
-    logger.info("Tắt máy chủ thành công. Bắt đầu tắt ứng dụng....");
+    // logger.info("Tắt máy chủ thành công. Bắt đầu tắt ứng dụng....");
     process.exit(0);
   });
 });
 
 process.on("SIGTERM", () => {
-  logger.info("Nhận được tín hiệu: SIGTERM. Bắt đầu tắt máy chủ.....");
+  // logger.info("Nhận được tín hiệu: SIGTERM. Bắt đầu tắt máy chủ.....");
   server.close(() => {
-    logger.info("Tắt máy chủ thành công. Bắt đầu tắt ứng dụng....");
+    // logger.info("Tắt máy chủ thành công. Bắt đầu tắt ứng dụng....");
     process.exit(0);
   });
 });
