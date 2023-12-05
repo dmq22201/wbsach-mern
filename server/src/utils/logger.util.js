@@ -17,7 +17,7 @@ const logger = winston.createLogger({
       filename: "error-%DATE%.log",
       datePattern: "DD-MM-YYYY",
       level: "error",
-      dirname: path.join(__dirname, "../../logs/errors"),
+      dirname: path.join(__dirname, "../../temp/logs/errors"),
       maxSize: "5m",
       maxFiles: "7d",
       format: combine(
@@ -32,7 +32,7 @@ const logger = winston.createLogger({
       filename: "%DATE%.log",
       datePattern: "DD-MM-YYYY",
       level: "info",
-      dirname: path.join(__dirname, "../../logs/"),
+      dirname: path.join(__dirname, "../../temp/logs/"),
       maxSize: "5m",
       maxFiles: "7d",
       format: combine(
