@@ -24,7 +24,7 @@ const app = express();
 
 // Lắng nghe sự kiện uncaughtException. Nghĩa là các lỗi xảy ra như là đọc biến không tồn tại chẳng hạn
 process.on("uncaughtException", (err) => {
-  //logger.error("Có lỗi Uncaught Exception: Bắt đầu tắt úng dụng...");
+  console.log("Có lỗi Uncaught Exception: Bắt đầu tắt úng dụng...");
   process.exit(1);
 });
 

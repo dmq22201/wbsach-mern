@@ -1,5 +1,4 @@
 const CustomError = require("../utils/CustomError.util");
-const logger = require("../utils/logger.util");
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 // * KHU VỰC XỬ LÝ LỖI CỤ THỂ * //
@@ -37,7 +36,6 @@ function handleJWTExpired(err) {
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 // * Hàm gửi json mô tả lỗi ở development
 function sendErrDev(err, res) {
-  logger.error(err);
   res.status(err.statusCode).json({
     status: err.status,
     error: err,
@@ -48,7 +46,6 @@ function sendErrDev(err, res) {
 
 // * Hàm gửi json mô tả lỗi ở production
 function sendErrProd(err, res) {
-  logger.error(err);
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
