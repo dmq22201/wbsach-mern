@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineCheckCircle } from "react-icons/hi2";
 
 const PopupContext = createContext();
@@ -26,34 +25,19 @@ function Window({ type, children }) {
     return () => (document.body.style.overflow = "auto");
   }, [isOpenPopup]);
 
+  if (!isOpenPopup) return null;
+
   return (
-    <AnimatePresence key="popup">
-      {isOpenPopup && (
-        <motion.div
-          key="popup"
-          className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ type: "just" }}
-          exit={{ opacity: 0 }}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "just" }}
-            exit={{ opacity: 0, scale: 0 }}
-            className="fixed overflow-hidden bg-white p-6"
-          >
-            <div className="flex flex-col items-center justify-center gap-6">
-              <div>{types[type]}</div>
-              <p className="text-base font-semibold uppercase sm:text-2xl">
-                {children}
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm">
+      <div className="fixed overflow-hidden bg-white p-6">
+        <div className="flex flex-col items-center justify-center gap-6">
+          <div>{types[type]}</div>
+          <p className="text-base font-semibold uppercase sm:text-2xl">
+            {children}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 

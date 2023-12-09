@@ -55,11 +55,9 @@ function EmailForm() {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <span className="text-xl font-medium uppercase">Địa chỉ email</span>
-      {msgFromServer && (
-        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
-      )}
-
+      <span className="font-roboto text-xl font-medium uppercase">
+        Địa chỉ email
+      </span>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup>
           <Label htmlFor="email">Địa chỉ email</Label>

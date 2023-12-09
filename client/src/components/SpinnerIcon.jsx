@@ -9,7 +9,13 @@ function SpinnerIcon({ size, center }) {
   };
 
   return (
-    <div className={`${center ? "flex justify-center" : ""}`}>
+    <div
+      className={`${
+        center
+          ? "flex h-screen items-center justify-center dark:bg-slate-800"
+          : ""
+      }`}
+    >
       <svg
         aria-hidden="true"
         className={`${generalClass} ${sizes[size]}`}

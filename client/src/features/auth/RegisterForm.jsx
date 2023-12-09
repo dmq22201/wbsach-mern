@@ -69,18 +69,6 @@ function RegisterForm() {
                 message:
                   "Tên tài khoản tối từ 4 - 20 ký tự, chữ cái và số, không ký tự đặc biệt",
               },
-              // validate: async (fieldValue) => {
-              //   const response = await fetch(
-              //     `http://127.0.0.1:3000/api/v1/auth/check-duplicate/?username=${fieldValue}`,
-              //   );
-
-              //   const data = await response.json();
-
-              //   return (
-              //     !data.isExist ||
-              //     "tên tài khoản đã được sử dụng. Vui lòng nhập tên tài khoản khác"
-              //   );
-              // },
             })}
           />
           {errors && <InputMsg msg={errors?.username?.message} />}
@@ -114,12 +102,12 @@ function RegisterForm() {
             disabled={isLoading || isSuccess}
             {...register("passwordConfirm", {
               required: "Vui lòng nhập lại mật khẩu.",
-              // validate: (fieldValue) => {
-              //   return (
-              //     fieldValue === getValues().password ||
-              //     "Nhập lại mật khẩu không khớp"
-              //   );
-              // },
+              validate: (fieldValue) => {
+                return (
+                  fieldValue === getValues().password ||
+                  "Nhập lại mật khẩu không khớp"
+                );
+              },
             })}
           />
           {errors && <InputMsg msg={errors?.passwordConfirm?.message} />}
@@ -138,18 +126,6 @@ function RegisterForm() {
                 value: REGEX_EMAIL,
                 message: "Địa chỉ email của bạn nhập không hợp lệ",
               },
-              // validate: async (fieldValue) => {
-              //   const response = await fetch(
-              //     `http://127.0.0.1:3000/api/v1/auth/check-duplicate/?email=${fieldValue}`,
-              //   );
-
-              //   const data = await response.json();
-
-              //   return (
-              //     !data.isExist ||
-              //     "Email bạn nhập đã được đăng ký với tài khoản khác. Vui lòng nhậps email khác"
-              //   );
-              // },
             })}
           />
           {errors && <InputMsg msg={errors?.email?.message} />}
@@ -174,6 +150,32 @@ function RegisterForm() {
           {errors && <InputMsg msg={errors?.fullName?.message} />}
         </InputGroup>
         <InputGroup>
+          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+            <Link
+              to="/forgot"
+              className="text-sm transition-all hover:text-violet-700 dark:hover:text-violet-400 md:text-base"
+            >
+              Quên tài khoản hoặc mật khẩu?
+            </Link>
+            <Link
+              to="/login"
+              className="text-sm transition-all hover:text-violet-700 dark:hover:text-violet-400 md:text-base"
+            >
+              Đã có tài khoản? Đăng nhập
+            </Link>
+          </div>
+        </InputGroup>
+        <InputGroup>
+          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+            <Link
+              to="/send-verify-email"
+              className="text-sm transition-all hover:text-violet-700 dark:hover:text-violet-400 md:text-base"
+            >
+              Không nhận được email xác thực?
+            </Link>
+          </div>
+        </InputGroup>
+        <InputGroup>
           <Button
             type="success"
             component="button"
@@ -183,28 +185,6 @@ function RegisterForm() {
             {isLoading ? <span>Đang đăng ký...</span> : <span>Đăng ký</span>}
           </Button>
         </InputGroup>
-        <InputGroup>
-          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            <Link
-              to="/forgot"
-              className="text-sm transition-colors hover:text-violet-700 md:text-base"
-            >
-              Quên tài khoản hoặc mật khẩu?
-            </Link>
-            <Link
-              to="/login"
-              className="text-sm underline transition-colors hover:text-violet-700 md:text-base"
-            >
-              Đã có tài khoản? Đăng nhập
-            </Link>
-            <Link
-              to="/send-verify-email"
-              className="text-sm underline hover:text-violet-700 md:text-base"
-            >
-              Không nhận được email xác thực?
-            </Link>
-          </div>
-        </InputGroup>
       </Form>
     );
   } else if (isSuccess && msgFromServer) {
@@ -212,7 +192,7 @@ function RegisterForm() {
   }
 
   return (
-    <div className="mx-auto rounded-xl bg-white p-8 shadow-md lg:w-[36.75rem]">
+    <div className="mx-auto w-fit rounded-lg bg-white p-10 shadow-md dark:bg-slate-800 dark:text-white">
       {content}
     </div>
   );

@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import useCloseWhenClickOutSide from "../hooks/useCloseWhenClickOutSide";
 
 const ModalContext = createContext();
@@ -27,14 +26,6 @@ function Modal({ children }) {
 function Open({ children, id }) {
   const { openModal } = useContext(ModalContext);
 
-  // if (children.type.name === "Button") {
-  //   return React.cloneElement(children, {
-  //     onClick: () => openModal(id),
-  //   });
-  // }
-
-  // return children;
-
   return React.cloneElement(children, {
     onClick: () => openModal(id),
   });
@@ -56,56 +47,17 @@ function Window({ id, children, isCloseWhenClickOuside = true }) {
     return () => (document.body.style.overflow = "auto");
   }, [showModalWithId, id]);
 
-  // const activeClass=
-  // const inActiveClass=
-
-  // return (
-  //   <>
-  //     {showModalWithId === id && (
-  //       <div
-  //         className={`fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm transition-all ${
-  //           showModalWithId === id ? "opacity-1 scale-100" : "scale-0 opacity-0"
-  //         }`}
-  //       >
-  //         <div
-  //           className={`fixed overflow-hidden bg-white p-6 transition-all ${
-  //             showModalWithId === id
-  //               ? "opacity-1 scale-100"
-  //               : "scale-0 opacity-0"
-  //           }`}
-  //         >
-  //           {children}
-  //         </div>
-  //       </div>
-  //     )}
-  //   </>
-  // );
+  if (showModalWithId !== id) return null;
 
   return (
-    <AnimatePresence key="modal">
-      {showModalWithId === id && (
-        <motion.div key="modal">
-          <motion.div
-            className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ type: "just" }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ type: "just" }}
-              exit={{ opacity: 0, scale: 0 }}
-              className="fixed overflow-hidden bg-white p-6"
-            >
-              {children}
-            </motion.div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm">
+      <div
+        ref={ref}
+        className="fixed overflow-hidden rounded-lg bg-white p-6 shadow-md dark:bg-slate-800 "
+      >
+        {children}
+      </div>
+    </div>
   );
 }
 

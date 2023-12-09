@@ -1,6 +1,6 @@
 function Label({ children, ...props }) {
   return (
-    <label className="font-medium" {...props}>
+    <label className="font-roboto font-medium dark:text-white" {...props}>
       {children}
     </label>
   );

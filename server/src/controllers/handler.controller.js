@@ -1,3 +1,4 @@
+const APIFeature = require("../utils/apiFeature.util");
 const asyncFnHandler = require("../utils/asynFnHandler.util");
 const CustomError = require("../utils/CustomError.util");
 
@@ -31,15 +32,19 @@ exports.getOne = (Model, popOptions) =>
     });
   });
 
-exports.getAll = (Model) =>
+exports.getAll = (Model, popOptions) =>
   asyncFnHandler(async (req, res, next) => {
-    let query;
+    // Model.find ở đây ta truyền vào chỉ tạo ra instance của Query constructor
+    // Trích: https://thecodebarbarian.com/how-find-works-in-mongoose.html
+    const features = new APIFeature(Model.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .pagination()
+      .populate(popOptions);
 
-    if (req.query) {
-      query = Model.find(req.query);
-    }
-
-    const docs = await query;
+    // Ta await để execute một chuỗi nối methods của Mongoose Query
+    const docs = await features.queryObjFromMongoose;
 
     res.status(200).json({
       status: "success",

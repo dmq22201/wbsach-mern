@@ -18,7 +18,7 @@ function InformationForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid, isDirty, touchedFields },
     reset,
   } = useForm({
     defaultValues: {
@@ -59,11 +59,10 @@ function InformationForm() {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <span className="text-xl font-medium uppercase">Thông tin cá nhân</span>
+      <span className="font-roboto text-xl font-medium uppercase">
+        Thông tin cá nhân
+      </span>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {msgFromServer && (
-          <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
-        )}
         <InputGroup>
           <Label htmlFor="fullName">Họ tên</Label>
           <Input

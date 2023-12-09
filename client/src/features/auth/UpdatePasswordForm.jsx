@@ -55,10 +55,9 @@ function UpdatePasswordForm() {
 
   return (
     <div className="flex w-full flex-col gap-6">
-      <span className="text-xl font-semibold uppercase">Mật khẩu</span>
-      {msgFromServer && (
-        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
-      )}
+      <span className="font-roboto text-xl font-semibold uppercase">
+        Mật khẩu
+      </span>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <InputGroup>
           <Label htmlFor="oldPassword">Mật khẩu cũ</Label>

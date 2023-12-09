@@ -11,11 +11,16 @@ import {
   HiOutlineLockClosed,
   HiOutlineShoppingCart,
   HiOutlinePower,
+  HiMiniMagnifyingGlass,
 } from "react-icons/hi2";
 
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import Avatar from "./Avatar";
+import Form from "./Form";
+import Input from "./Input";
+import Button from "./Button";
+import InputGroup from "./InputGroup";
 
 function Header() {
   const isMobile = useDetectMobileDevice();
@@ -34,20 +39,15 @@ function Header() {
   };
 
   return (
-    <header className="sticky top-0 bg-white shadow-md">
+    <header className="sticky top-0 z-10 bg-white shadow-md dark:bg-slate-800 dark:text-white">
       <div className="container">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-20 items-center justify-between gap-10">
           <Link className="text-2xl font-medium uppercase" to="/home">
             My Logo
           </Link>
 
           {!isMobile ? (
             <>
-              <div className="flex items-center gap-6">
-                <NavLink to="/home">Trang chủ</NavLink>
-                <NavLink to="/books">Mua sách</NavLink>
-                <NavLink to="/genres">Thể loại</NavLink>
-              </div>
               <Navbar currentUser={currentUser} handleLogout={handleLogout} />
             </>
           ) : (
@@ -62,7 +62,7 @@ function Header() {
                       <Sidebar.DropdownToggle>
                         <div className="flex items-center gap-2 p-4 text-sm sm:text-base">
                           <Avatar currentUser={currentUser} size="md" />
-                          <span className="font-semibold">
+                          <span className="font-semibold capitalize">
                             {currentUser.fullName}
                           </span>
                         </div>
@@ -101,7 +101,9 @@ function Header() {
                         <div className="flex items-center gap-2 p-4 text-xs sm:text-base">
                           <HiOutlineShoppingCart className="h-4 w-4" />
                           <span>Giỏ hàng:</span>
-                          <span className="font-semibold text-red-500">6</span>
+                          <span className="font-semibold text-red-500 dark:text-red-400">
+                            6
+                          </span>
                         </div>
                       </Link>
                     </Sidebar.Item>

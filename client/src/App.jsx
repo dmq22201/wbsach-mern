@@ -18,6 +18,7 @@ import SendVerifyEmail from "./pages/SendVerifyEmail";
 import VerifyEmail from "./pages/VerifyEmail";
 import PersistLogin from "./features/auth/PersistLogin";
 import CheckLoggedIn from "./components/CheckLoggedIn";
+import ShippingAddress from "./features/auth/ShippingAddress";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
                 <Route path="information" element={<ProfileInformation />} />
                 <Route path="security" element={<ProfileSecurity />} />
                 <Route path="order-history" element={<OrderHistory />} />
+                <Route path="shipping-address" element={<ShippingAddress />} />
               </Route>
             </Route>
           </Route>

@@ -28,19 +28,18 @@ function SendVerifyEmailForm() {
       setMsgFromServer(res);
       setSecondLeft(30);
     } catch (err) {
-      console.log(err);
       setMsgFromServer({
-        status: err.data?.status,
-        message: err.data?.message,
+        status: err.data?.status || err.originalStatus,
+        message: err.data?.message || err.data,
       });
     }
   };
 
   return (
-    <div className="mx-auto rounded-xl bg-white p-8 shadow-md lg:w-[36.75rem]">
+    <div className="mx-auto w-fit rounded-lg bg-white p-10 shadow-md dark:bg-slate-800 dark:text-white">
       <Form
         onSubmit={handleSubmit(onSubmit)}
-        headingText="Gửi lại xác minh email"
+        headingText="Gửi lại thư xác minh email"
       >
         {msgFromServer && (
           <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
@@ -54,9 +53,7 @@ function SendVerifyEmailForm() {
             placeholder="Nhập email.. vd: example@mail.com"
             autoComplete="on"
             disabled={
-              isLoading ||
-              secondsLeft > 0 ||
-              msgFromServer?.originalStatus === 429
+              isLoading || secondsLeft > 0 || msgFromServer?.status === 429
             }
             {...register("email", {
               required: "Vui lòng nhập email",
@@ -73,7 +70,7 @@ function SendVerifyEmailForm() {
               !isValid ||
               isLoading ||
               secondsLeft > 0 ||
-              msgFromServer?.originalStatus === 429
+              msgFromServer?.status === 429
             }
           >
             {isLoading ? (

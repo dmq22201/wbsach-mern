@@ -106,6 +106,7 @@ exports.login = asyncFnHandler(async function (req, res, next) {
       email: foundUserInDB.email,
       phoneNumber: foundUserInDB.phoneNumber,
       gender: foundUserInDB.gender,
+      createdAt: foundUserInDB.createdAt,
     },
   });
 });
@@ -363,6 +364,7 @@ exports.refresh = asyncFnHandler(async function (req, res, next) {
           email: foundUserInDB.email,
           phoneNumber: foundUserInDB.phoneNumber,
           gender: foundUserInDB.gender,
+          createdAt: foundUserInDB.createdAt,
         },
       });
     }
@@ -577,7 +579,8 @@ exports.updateSecurityEmail = asyncFnHandler(async function (req, res, next) {
 
 // Chức năng: Cung cấp thông tin  về tài khoản cho trang profile
 exports.profile = asyncFnHandler(async function (req, res, next) {
-  const { fullName, phoneNumber, gender, email, avatar } = req.currentUser;
+  const { fullName, phoneNumber, gender, email, avatar, createdAt } =
+    req.currentUser;
 
   res.status(200).json({
     status: "success",
@@ -587,6 +590,7 @@ exports.profile = asyncFnHandler(async function (req, res, next) {
       phoneNumber,
       gender,
       email,
+      createdAt,
     },
   });
 });

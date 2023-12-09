@@ -1,29 +1,33 @@
 import React from "react";
 
-const Input = React.forwardRef(function Input({ type, state, ...props }, ref) {
-  const types = {
-    text: "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-violet-500 focus:ring-violet-500 disabled:cursor-not-allowed disabled:bg-gray-100 focus:outline-none transition-colors",
-    password:
-      "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-violet-500 focus:ring-violet-500 focus:outline-none disabled:cursor-not-allowed disabled:bg-gray-100 transition-colors",
-    checkbox:
-      "w-4 h-4 text-violet-600 bg-gray-100 border-gray-300 rounded focus:ring-violet-500",
-    radio: "",
-    file: "block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100",
-  };
+const Input = React.forwardRef(function Input({ type, ...props }, ref) {
+  if (type === "checkbox" || type === "radio") {
+    return (
+      <input
+        type={type}
+        ref={ref}
+        className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+        {...props}
+      />
+    );
+  }
 
-  const states = {
-    success:
-      "bg-green-50 border border-green-500 text-green-900 placeholder-green-700 focus:border-green-500 focus:ring-green-500 transition-colors",
-    error:
-      "bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:border-red-500 focus:ring-red-500 transition-colors",
-  };
+  if (type === "file") {
+    return (
+      <input
+        ref={ref}
+        type="file"
+        className="block w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
+        {...props}
+      />
+    );
+  }
 
   return (
     <input
-      state={state}
-      ref={ref}
       type={type}
-      className={`${types[type]} ${states[state]}`}
+      ref={ref}
+      className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-black focus:border-violet-500 focus:outline-none focus:ring-violet-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-violet-500 dark:focus:ring-violet-500"
       {...props}
     />
   );

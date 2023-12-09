@@ -55,8 +55,10 @@ function DeleteAccountForm() {
       <Modal.Window id="deleteAccount" isCloseWhenClickOuside={false}>
         <div className="flex flex-col gap-6">
           <HiOutlineExclamationTriangle className="h-20 w-20 self-center text-orange-500" />
-          <p className="font-medium text-red-500">
-            Bạn có muốn xóa tài khoản không?. Nếu có hãy nhập username bạn vào.
+          <p className="font-medium text-red-600 dark:text-red-400">
+            Bạn có muốn xóa tài khoản không?. Nếu có hãy nhập{" "}
+            <span className="text-red font-bold underline">tên tài khoản</span>{" "}
+            bạn vào.
           </p>
 
           {msgFromServer && (

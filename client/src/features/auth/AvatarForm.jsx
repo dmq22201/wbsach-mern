@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSendUpdateAvatarMutation } from "./authApiSlice";
 import Form from "../../components/Form";
+import { HiCheck } from "react-icons/hi2";
 
 import InputMsg from "../../components/InputMsg";
 import Button from "../../components/Button";
@@ -38,6 +39,7 @@ function AvatarForm() {
 
   const onSubmit = async (data) => {
     try {
+      console.log(data);
       const formData = new FormData();
       formData.append("avatar", data.avatar[0]);
       const res = await sendUpdateAvatar(formData).unwrap();
@@ -53,14 +55,12 @@ function AvatarForm() {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <span className="text-base font-medium uppercase sm:text-2xl">
+      <span className="font-roboto text-base font-medium uppercase sm:text-xl">
         Ảnh đại diện
       </span>
-      {msgFromServer && (
-        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
-      )}
       <div className="flex flex-col items-center gap-8 md:flex-row">
         <Avatar currentUser={currentUser} size="big" />
+
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col items-start gap-2">
             <Input
@@ -72,14 +72,16 @@ function AvatarForm() {
               placeholder="test"
               {...register("avatar")}
             />
-            <Button
-              disabled={isLoading || !isDirty}
-              isLoading={isLoading}
-              type="success"
-              component="button"
-            >
-              Lưu ảnh
-            </Button>
+            {isDirty && (
+              <Button
+                disabled={isLoading || !isDirty}
+                isLoading={isLoading}
+                type="success"
+                component="button"
+              >
+                Lưu
+              </Button>
+            )}
           </div>
         </Form>
       </div>

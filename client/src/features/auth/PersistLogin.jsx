@@ -5,22 +5,16 @@ import usePersist from "../../hooks/usePersist";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "./authSlice";
 import SpinnerIcon from "../../components/SpinnerIcon";
-import MsgPage from "../../components/MsgPage";
 
 const PersistLogin = () => {
   const [persist] = usePersist(); // lấy giá trị persist. Giá trị là gì tùy thuộc vào initial State trong custom hook
 
-  const [msgFromServer, setMsgFromServer] = useState(null);
   const token = useSelector(selectCurrentToken); // lấy access token hiện tại
-
+  const [msgFromServer, setMsgFromServer] = useState(null);
   const effectRan = useRef(false); // xủ lý useEffect chạy 2 lần trong strict mode
 
-  const [
-    sendRefreshToken,
-    { isUninitialized, isLoading, isSuccess, isError, error },
-  ] = useGetRefreshTokenMutation();
-
-  const [trueSuccess, setTrueSuccess] = useState(false);
+  const [sendRefreshToken, { isLoading, isSuccess, isError, isUninitialized }] =
+    useGetRefreshTokenMutation();
 
   useEffect(() => {
     if (effectRan.current === true || process.env.NODE_ENV !== "development") {
@@ -50,17 +44,19 @@ const PersistLogin = () => {
   if (!persist) {
     // ghi nhớ đăng nhập: không
     content = <Outlet />;
+  } else if (isLoading) {
+    // ghi nhớ đăng nhập có nhưng token: đang được fetching
+    content = <SpinnerIcon size="xl" center={true} />;
   } else if (persist && !token) {
     // ghi nhớ đăng nhập: có nhưng token: không có
     content = <Outlet />;
-  } else if (persist && isLoading) {
-    // ghi nhớ đăng nhập có nhưng token: đang được fetching
-    content = <SpinnerIcon size="xl" center={true} />;
   } else if (persist && isSuccess) {
     // ghi nhớ đăng nhập có nhưng token: fetch thành công
     content = <Outlet />;
   } else if (persist && isError) {
     // ghi nhớ đăng nhập có nhưng token: bị lỗi
+    content = <Outlet />;
+  } else if (token && isUninitialized) {
     content = <Outlet />;
   }
 

@@ -52,7 +52,7 @@ function ResetPasswordForm() {
   };
 
   return (
-    <div className="mx-auto rounded-xl bg-white p-8 shadow-md lg:w-[36.75rem]">
+    <div className="mx-auto w-fit rounded-lg bg-white p-10 shadow-md dark:bg-slate-800 dark:text-white">
       <Form onSubmit={handleSubmit(onSubmit)} headingText="Lấy lại mật khẩu">
         {msgFromServer && (
           <InputMsg msgFromServer={msgFromServer} isFromServer={true} />

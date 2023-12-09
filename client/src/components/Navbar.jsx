@@ -4,15 +4,40 @@ import {
   HiOutlineClock,
   HiOutlineLockClosed,
   HiOutlinePower,
+  HiMiniMoon,
+  HiOutlineSun,
 } from "react-icons/hi2";
+import { EmptyAvatar } from "./Icons";
+import { useEffect, useState } from "react";
 
 import Button from "./Button";
 import Avatar from "./Avatar";
 import Menu from "./Menu";
-import { EmptyAvatar } from "./Icons";
+
+const menuItems = [{}];
 
 function Navbar({ currentUser, handleLogout }) {
   const navigate = useNavigate();
+
+  const [theme, setTheme] = useState(
+    JSON.parse(localStorage.getItem("theme")) ?? "light",
+  );
+
+  const handleTheme = () => {
+    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
+  };
+
+  useEffect(() => {
+    if (theme === "light") {
+      document.body.classList.remove("dark");
+    }
+
+    if (theme === "dark") {
+      document.body.classList.add("dark");
+    }
+
+    localStorage.setItem("theme", JSON.stringify(theme));
+  }, [theme]);
 
   return (
     <nav className="flex h-20 items-center justify-between gap-6">
@@ -28,7 +53,7 @@ function Navbar({ currentUser, handleLogout }) {
                     ) : (
                       <Avatar currentUser={currentUser} size="md" />
                     )}
-                    <span className="font-semibold text-gray-400 transition-colors hover:text-gray-950">
+                    <span className="font-semibold capitalize text-gray-400 transition-colors hover:text-black dark:hover:text-white">
                       {currentUser.fullName}
                     </span>
                   </div>
@@ -38,7 +63,7 @@ function Navbar({ currentUser, handleLogout }) {
                     <Menu.Item>
                       <Link
                         to="/profile"
-                        className="flex items-center gap-2 rounded-t-xl p-4 transition-colors hover:bg-gray-50"
+                        className="flex items-center gap-2 rounded-t-lg p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700"
                       >
                         <HiOutlineUserCircle className="h-4 w-4" />
                         Chỉnh sửa hồ sơ
@@ -47,7 +72,7 @@ function Navbar({ currentUser, handleLogout }) {
                     <Menu.Item>
                       <Link
                         to="/profile/security"
-                        className="flex items-center gap-2 p-4 transition-colors hover:bg-gray-50"
+                        className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700"
                       >
                         <HiOutlineLockClosed className="h-4 w-4" />
                         Bảo mật
@@ -56,17 +81,35 @@ function Navbar({ currentUser, handleLogout }) {
                     <Menu.Item>
                       <Link
                         to="/profile/order-history"
-                        className="flex items-center gap-2 p-4 transition-colors hover:bg-gray-50"
+                        className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700"
                       >
                         <HiOutlineClock className="h-4 w-4" />
-                        Lịch sủ mua hàng
+                        Lịch sử mua hàng
                       </Link>
+                    </Menu.Item>
+                    <Menu.Item toCloseMenu={false}>
+                      <div className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700">
+                        <div className="flex items-center gap-2">
+                          {theme === "light" ? (
+                            <HiOutlineSun className="h-4 w-4" />
+                          ) : (
+                            <HiMiniMoon className="h-4 w-4 text-yellow-500" />
+                          )}
+                          <span>Giao diện tối</span>
+                        </div>
+                        <div>
+                          <label
+                            htmlFor="toggleDarkMode"
+                            className="relative h-10 w-20 rounded-full bg-gray-100"
+                          ></label>
+                        </div>
+                      </div>
                     </Menu.Item>
                   </div>
                   <div>
                     <Menu.Item>
                       <button
-                        className="flex w-full items-center gap-2 rounded-b-xl p-4 transition-colors hover:bg-gray-50"
+                        className="flex w-full items-center gap-2 rounded-b-lg p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700"
                         onClick={handleLogout}
                       >
                         <HiOutlinePower className="h-4 w-4" />
@@ -87,6 +130,13 @@ function Navbar({ currentUser, handleLogout }) {
           <Button to="/register" component="Link" type="outline">
             Đăng ký
           </Button>
+          <button onClick={handleTheme}>
+            {theme === "light" ? (
+              <HiOutlineSun className="h-6 w-6" />
+            ) : (
+              <HiMiniMoon className="h-6 w-6 text-yellow-500" />
+            )}
+          </button>
         </div>
       )}
     </nav>

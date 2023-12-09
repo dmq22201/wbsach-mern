@@ -5,11 +5,13 @@ import Footer from "./Footer";
 
 function AppLayout() {
   return (
-    <div className="grid grid-rows-[5rem,1fr] gap-10">
+    <div className="grid grid-rows-[5rem,1fr] gap-10 bg-[#f0f2f5] transition-all dark:bg-slate-900">
       <Header />
       <main className="min-h-screen overflow-hidden">
         <div className="container">
-          <Outlet />
+          <div className="dark:text-white">
+            <Outlet />
+          </div>
         </div>
       </main>
       <Footer />

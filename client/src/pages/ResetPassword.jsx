@@ -26,8 +26,8 @@ function ResetPassword() {
   useEffect(() => {
     if (isError) {
       setMsgFromServer({
-        status: err.data?.status,
-        message: err.data?.message,
+        status: error.data?.status,
+        message: error.data?.message,
       });
     }
   }, [isError]);

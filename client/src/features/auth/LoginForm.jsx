@@ -43,7 +43,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="mx-auto rounded-xl bg-white p-8 shadow-md lg:w-[36.75rem]">
+    <div className="mx-auto w-fit rounded-lg bg-white p-10 shadow-md dark:bg-slate-800 dark:text-white">
       <Form onSubmit={handleSubmit(onSubmit)} headingText="Đăng nhập tài khoản">
         {msgFromServer && (
           <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
@@ -92,6 +92,32 @@ function LoginForm() {
           </Label>
         </InputGroup>
         <InputGroup>
+          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+            <Link
+              to="/forgot"
+              className="text-sm transition-all hover:text-violet-700 dark:hover:text-violet-400 md:text-base"
+            >
+              Quên tài khoản hoặc mật khẩu?
+            </Link>
+            <Link
+              to="/register"
+              className="text-sm transition-all hover:text-violet-700 dark:hover:text-violet-400 md:text-base"
+            >
+              Chưa có tài khoản? Đăng ký
+            </Link>
+          </div>
+        </InputGroup>
+        <InputGroup>
+          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+            <Link
+              to="/send-verify-email"
+              className="text-sm transition-all hover:text-violet-700 dark:hover:text-violet-400 md:text-base"
+            >
+              Không nhận được email xác thực?
+            </Link>
+          </div>
+        </InputGroup>
+        <InputGroup>
           <Button
             type="primary"
             component="button"
@@ -104,28 +130,6 @@ function LoginForm() {
               <span>Đăng nhập</span>
             )}
           </Button>
-        </InputGroup>
-        <InputGroup>
-          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            <Link
-              to="/forgot"
-              className="text-sm hover:text-violet-700 md:text-base"
-            >
-              Quên tài khoản hoặc mật khẩu?
-            </Link>
-            <Link
-              to="/register"
-              className="text-sm underline hover:text-violet-700 md:text-base"
-            >
-              Chưa có tài khoản? Đăng ký
-            </Link>
-            <Link
-              to="/send-verify-email"
-              className="text-sm underline hover:text-violet-700 md:text-base"
-            >
-              Không nhận được email xác thực?
-            </Link>
-          </div>
         </InputGroup>
       </Form>
     </div>

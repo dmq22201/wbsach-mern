@@ -21,6 +21,7 @@ const corsOptions = require("./configs/corsOptions.config.js");
 
 // Khởi tạo Application
 const app = express();
+// app.enable("trust proxy");
 
 // Lắng nghe sự kiện uncaughtException. Nghĩa là các lỗi xảy ra như là đọc biến không tồn tại chẳng hạn
 process.on("uncaughtException", (err) => {

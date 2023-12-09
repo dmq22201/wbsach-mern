@@ -1,6 +1,5 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { HiChevronDown } from "react-icons/hi2";
-import { AnimatePresence, motion } from "framer-motion";
 import useCloseWhenClickOutSide from "../hooks/useCloseWhenClickOutSide";
 
 const MenuContext = createContext();
@@ -64,29 +63,23 @@ function List({ id, children, size }) {
     closeMenu();
   }, false);
 
+  if (showMenuWithId !== id) return null;
+
   return (
-    <AnimatePresence>
-      {showMenuWithId === id && (
-        <motion.ul
-          ref={ref}
-          key="menu"
-          className={`absolute right-0 top-full mt-5 ${size} divide-y bg-white shadow-lg`}
-          initial={{ translateY: "100%", opacity: 0 }}
-          animate={{ translateY: 0, opacity: 1 }}
-          transition={{ type: "just" }}
-          exit={{ translateY: "100%", opacity: 0 }}
-        >
-          {children}
-        </motion.ul>
-      )}
-    </AnimatePresence>
+    <ul
+      ref={ref}
+      className={`absolute right-0 top-full mt-5 ${size} divide-y rounded-lg bg-white shadow-md dark:divide-slate-700 dark:bg-slate-800 `}
+    >
+      {children}
+    </ul>
   );
 }
 
-function Item({ children }) {
+function Item({ children, toCloseMenu = true }) {
   const { closeMenu } = useContext(MenuContext);
 
   const handleClick = () => {
+    if (!toCloseMenu) return;
     closeMenu();
   };
 

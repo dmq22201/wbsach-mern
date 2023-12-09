@@ -1,8 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { HiMiniChevronDown, HiXMark } from "react-icons/hi2";
 import useCloseWhenClickOutSide from "../hooks/useCloseWhenClickOutSide";
-import { AnimatePresence, motion } from "framer-motion";
-
 const SidebarContext = createContext();
 
 function Sidebar({ children }) {
@@ -72,38 +70,27 @@ function Content({ children }) {
     return () => (document.body.style.overflow = "auto");
   }, [showSidebar]);
 
-  return (
-    <AnimatePresence key="sidebar">
-      {showSidebar && (
-        <motion.div
-          key="sidebar"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ type: "just" }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-10 h-screen w-screen bg-black/30 backdrop-blur-sm"
-        >
-          <motion.div
-            ref={ref}
-            className="fixed bottom-0 right-0 top-0 w-[80vw] overflow-auto bg-white shadow"
-            initial={{ opacity: 0, translateX: "100%" }}
-            animate={{ translateX: 0, opacity: 1 }}
-            transition={{ type: "just" }}
-            exit={{ opacity: 0, translateX: "100%" }}
-          >
-            <div className="flex h-screen flex-col divide-y">
-              <div className="flex items-center px-7 py-5">
-                <button className="text-2xl" onClick={handleClick}>
-                  {<HiXMark />}
-                </button>
-              </div>
+  if (!showSidebar) return null;
 
-              <div className="flex h-full flex-col divide-y">{children}</div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+  return (
+    <div className="fixed inset-0 z-10 h-screen w-screen bg-black/30 backdrop-blur-sm">
+      <div
+        ref={ref}
+        className="fixed bottom-0 right-0 top-0 w-[60vw] overflow-auto bg-white shadow dark:bg-slate-800"
+      >
+        <div className="flex h-screen flex-col divide-y dark:divide-slate-700">
+          <div className="flex items-center px-4 py-5">
+            <button className="text-2xl" onClick={handleClick}>
+              {<HiXMark />}
+            </button>
+          </div>
+
+          <div className="flex h-full flex-col divide-y dark:divide-slate-700">
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -150,21 +137,12 @@ function DropdownToggle({ children }) {
 function DropdownContent({ children }) {
   const { showDropdown } = useContext(SidebarContext);
 
+  if (!showDropdown) return null;
+
   return (
-    <AnimatePresence>
-      {showDropdown && (
-        <motion.div
-          key="dropdownContent"
-          className="bg-gray-100"
-          initial={{ height: 0, overflow: "hidden" }}
-          animate={{ height: "auto" }}
-          transition={{ type: "just" }}
-          exit={{ height: 0, overflow: "hidden" }}
-        >
-          {children}
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div key="dropdownContent" className="bg-gray-100 dark:bg-slate-700">
+      {children}
+    </div>
   );
 }
 
