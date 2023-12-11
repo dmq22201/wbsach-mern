@@ -56,7 +56,7 @@ const PersistLogin = () => {
   } else if (persist && isError) {
     // ghi nhớ đăng nhập có nhưng token: bị lỗi
     content = <Outlet />;
-  } else if (token && isUninitialized) {
+  } else if (persist && token && isUninitialized) {
     content = <Outlet />;
   }
 

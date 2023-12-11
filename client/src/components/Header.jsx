@@ -12,6 +12,8 @@ import {
   HiOutlineShoppingCart,
   HiOutlinePower,
   HiMiniMagnifyingGlass,
+  HiOutlineSun,
+  HiMiniMoon,
 } from "react-icons/hi2";
 
 import Sidebar from "./Sidebar";
@@ -21,11 +23,15 @@ import Form from "./Form";
 import Input from "./Input";
 import Button from "./Button";
 import InputGroup from "./InputGroup";
+import { useContext, useEffect, useState } from "react";
+import { ThemeContext } from "./Theme";
+import Switch from "./Switch";
 
 function Header() {
   const isMobile = useDetectMobileDevice();
   const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+  const { theme, handleTheme } = useContext(ThemeContext);
 
   const [sendLogout] = useSendLogoutMutation();
 
@@ -106,6 +112,21 @@ function Header() {
                           </span>
                         </div>
                       </Link>
+                    </Sidebar.Item>
+                    <Sidebar.Item toCloseSidebar={false}>
+                      <div className="flex w-full justify-between p-4">
+                        <div className="flex items-center gap-2">
+                          {theme === "light" ? (
+                            <HiOutlineSun className="h-4 w-4" />
+                          ) : (
+                            <HiMiniMoon className="h-4 w-4 text-yellow-500" />
+                          )}
+                          <span>
+                            Giao diện: {theme === "dark" ? "Tối" : "Sáng"}
+                          </span>
+                        </div>
+                        <Switch handleFn={handleTheme} val={theme} />
+                      </div>
                     </Sidebar.Item>
                   </div>
                 ) : (

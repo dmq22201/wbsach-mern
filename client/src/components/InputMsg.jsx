@@ -24,9 +24,7 @@ function InputMsg({ msg, msgFromServer, isFromServer = false }) {
     );
   }
 
-  return (
-    <p className="text-md font-medium text-red-600 dark:text-red-400">{msg}</p>
-  );
+  return <p className="font-medium text-red-600 dark:text-red-400">{msg}</p>;
 }
 
 export default InputMsg;

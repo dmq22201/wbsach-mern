@@ -23,7 +23,7 @@ function AvatarForm() {
     },
   });
 
-  const [sendUpdateAvatar, { isLoading, isSuccess }] =
+  const [sendUpdateAvatar, { isLoading, isSuccess, isError }] =
     useSendUpdateAvatarMutation();
 
   const currentUser = useSelector(selectCurrentUser);
@@ -39,13 +39,11 @@ function AvatarForm() {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
       const formData = new FormData();
       formData.append("avatar", data.avatar[0]);
       const res = await sendUpdateAvatar(formData).unwrap();
       setMsgFromServer(res);
     } catch (err) {
-      console.log(err);
       setMsgFromServer({
         status: err.data?.status,
         message: err.data?.message,
@@ -55,6 +53,14 @@ function AvatarForm() {
 
   return (
     <div className="flex w-full flex-col gap-4">
+      {isDirty && !isError && !isSuccess && null}
+      {!isDirty && !isError && isSuccess && (
+        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
+      )}
+      {isDirty && isError && !isSuccess && (
+        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
+      )}
+
       <span className="font-roboto text-base font-medium uppercase sm:text-xl">
         Ảnh đại diện
       </span>

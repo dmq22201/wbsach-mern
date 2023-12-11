@@ -34,7 +34,7 @@ const authApiSlice = apiSlice.injectEndpoints({
           const { accessToken, user } = data;
           dispatch(setCredientials({ accessToken, user }));
         } catch (err) {
-          console.log(err);
+          // console.log(err);
         }
       },
       invalidatesTags: ["CurrentUser"],

@@ -60,27 +60,27 @@ exports.login = asyncFnHandler(async function (req, res, next) {
   // 10) Tạo 1 mảng refresh token. Nó sẽ được dùng để phát hiện refresh token của user đang bị tái sử dụng, hoặc bị trộm
   let newRefreshTokenArrInDB = [];
 
-  // 10)  Kiểm tra nếu  user không cung cấp refresh token thông qua cookie
+  if (oldRefreshToken) {
+    // 10.1) Ta tìm user có liên kết với refresh token này không? trong database dựa vào refresh token user cấp
+    const foundRefreshTokenInDB = await User.findOne({
+      refreshToken: oldRefreshToken,
+    });
+
+    // 10.2) Nếu không tìm ra nghĩa là REFRESH TOKEN NÀY đang bị TÁI SỬ DỤNG HOẶC BỊ TRỘM. Lập tức làm sạch DANH SÁCH REFRESH TOKEN(LÚC NÀY CÁC THIẾT BỊ KHÁC SẼ BỊ LOGOUT hết). Ngược lại lọc cái cũ ra
+    if (!foundRefreshTokenInDB) {
+      newRefreshTokenArrInDB = [];
+    } else {
+      newRefreshTokenArrInDB = foundUserInDB.refreshToken.filter(
+        (rt) => rt !== oldRefreshToken
+      );
+    }
+
+    res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
+  }
+
   if (!oldRefreshToken) {
-    // 10.1) Ta giữ nguyên danh sách refresh token trong database cho user (DANH SÁCH refresh token sử dụng trên từng thiết bị khác nhau)
     newRefreshTokenArrInDB = foundUserInDB.refreshToken;
   }
-
-  // 10.2) Ngược lại nếu user có cung cấp refresh token ta xóa bỏ refresh token đó khỏi DANH SÁCH refresh token trong database
-  newRefreshTokenArrInDB = foundUserInDB.refreshToken.filter(
-    (rt) => rt !== oldRefreshToken
-  );
-
-  // 10.3) Ta tìm user có liên kết với refresh token này không? trong database dựa vào refresh token user cấp
-  const foundRefreshTokenInDB = await User.findOne({
-    refreshToken: oldRefreshToken,
-  });
-
-  // 10.4) Nếu không tìm ra nghĩa là REFRESH TOKEN NÀY đang bị TÁI SỬ DỤNG HOẶC BỊ TRỘM. Lập tức làm sạch DANH SÁCH REFRESH TOKEN(LÚC NÀY CÁC THIẾT BỊ KHÁC SẼ BỊ LOGOUT hết)
-  if (!foundRefreshTokenInDB) {
-    newRefreshTokenArrInDB = [];
-  }
-  res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
 
   // 11) Áp dụng DANH SÁCH Refresh token đã tính toán vào database đè lên DANH SÁCH CŨ (có thể mới, có thể vẫn như cũ)
   foundUserInDB.refreshToken = [...newRefreshTokenArrInDB, newRefreshToken];
@@ -309,6 +309,8 @@ exports.refresh = asyncFnHandler(async function (req, res, next) {
         }
 
         const hackedUser = await User.findById(decoded.userId);
+
+        if (!hackedUser) return next(new CustomError("Forbidden", 403));
 
         hackedUser.refreshToken = [];
         await hackedUser.save({ validateBeforeSave: false });

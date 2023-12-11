@@ -10,6 +10,7 @@ const server = app.listen(PORT, function () {
 // Lỗi này có tên là: Unhandled Promise Rejection
 // server.close() would stop the server, but not the app so if you had other code running then it'd still be executed. process.exit() stops the process completely which stops everything.
 process.on("unhandledRejection", (reason, promise) => {
+  console.log(reason);
   server.close(() => {
     console.log(`Có lỗi Unhandled Rejection: Bắt đầu tắt úng dụng...`);
     process.exit(1);

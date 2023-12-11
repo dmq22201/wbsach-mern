@@ -18,7 +18,7 @@ import SendVerifyEmail from "./pages/SendVerifyEmail";
 import VerifyEmail from "./pages/VerifyEmail";
 import PersistLogin from "./features/auth/PersistLogin";
 import CheckLoggedIn from "./components/CheckLoggedIn";
-import ShippingAddress from "./features/auth/ShippingAddress";
+import ShippingAddress from "./pages/ShippingAddress";
 
 function App() {
   return (

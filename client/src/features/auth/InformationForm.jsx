@@ -18,7 +18,7 @@ function InformationForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, isDirty, touchedFields },
+    formState: { errors, isValid, isDirty },
     reset,
   } = useForm({
     defaultValues: {
@@ -29,7 +29,7 @@ function InformationForm() {
     mode: "onChange",
   });
 
-  const [sendUpdateInfo, { isLoading, isSuccess }] =
+  const [sendUpdateInfo, { isLoading, isSuccess, isError }] =
     useSendUpdateInfoMutation();
 
   const [msgFromServer, setMsgFromServer] = useState(null);
@@ -59,6 +59,14 @@ function InformationForm() {
 
   return (
     <div className="flex w-full flex-col gap-4">
+      {isDirty && !isError && !isSuccess && null}
+      {!isDirty && !isError && isSuccess && (
+        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
+      )}
+      {isDirty && isError && !isSuccess && (
+        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
+      )}
+
       <span className="font-roboto text-xl font-medium uppercase">
         Thông tin cá nhân
       </span>

@@ -94,12 +94,14 @@ function Content({ children }) {
   );
 }
 
-function Item({ children, hasDropdown }) {
+function Item({ children, hasDropdown, toCloseSidebar = true }) {
   const { toggleShowDropdown, closeSidebar } = useContext(SidebarContext);
 
   function handleClick() {
     if (hasDropdown) {
       toggleShowDropdown();
+    } else if (!toCloseSidebar) {
+      return;
     } else {
       closeSidebar();
     }

@@ -16,7 +16,7 @@ function MsgPage({ msgFromServer }) {
   };
 
   const statesClass = {
-    success: "text-green-600 font-semibold",
+    success: "text-green-600 font-semibold dark:text-green-400",
     error: "text-red-600 font-semibold dark:text-red-400",
   };
 
@@ -37,15 +37,15 @@ function MsgPage({ msgFromServer }) {
   }
 
   return (
-    <div className="flex items-center">
-      <div className="mx-auto flex flex-col gap-6">
+    <div className="mx-auto flex w-fit items-center rounded-lg p-10 dark:bg-slate-800 md:w-[36.75rem]">
+      <div className="flex w-full flex-col gap-6">
         <Link to="/home">
-          <div className="flex items-center gap-2 font-semibold transition-colors hover:text-violet-500">
+          <div className="flex  items-center gap-2 justify-self-start font-semibold transition-colors hover:text-violet-500">
             <HiMiniArrowLeft />
             <span>Quay về trang chủ</span>
           </div>
         </Link>
-        <div className="flex flex-col items-center justify-center gap-8 text-center">
+        <div className="mx-auto flex flex-col items-center justify-center gap-8 text-center">
           {stateIcon}
           <p className={stateClass}>{msgFromServer?.message}</p>
         </div>

@@ -29,7 +29,7 @@ function Window({ type, children }) {
 
   return (
     <div className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm">
-      <div className="fixed overflow-hidden bg-white p-6">
+      <div className="fixed overflow-hidden rounded-lg bg-white p-6 text-black dark:bg-slate-800 dark:text-white">
         <div className="flex flex-col items-center justify-center gap-6">
           <div>{types[type]}</div>
           <p className="text-base font-semibold uppercase sm:text-2xl">

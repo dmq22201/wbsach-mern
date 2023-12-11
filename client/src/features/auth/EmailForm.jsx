@@ -27,7 +27,7 @@ function EmailForm() {
     },
   });
 
-  const [sendUpdateSecurityEmail, { isLoading, isSuccess }] =
+  const [sendUpdateSecurityEmail, { isLoading, isSuccess, isError }] =
     useSendUpdateSecurityEmailMutation();
 
   const [msgFromServer, setMsgFromServer] = useState(null);
@@ -55,6 +55,13 @@ function EmailForm() {
 
   return (
     <div className="flex w-full flex-col gap-4">
+      {isDirty && !isError && !isSuccess && null}
+      {!isDirty && !isError && isSuccess && (
+        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
+      )}
+      {isDirty && isError && !isSuccess && (
+        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
+      )}
       <span className="font-roboto text-xl font-medium uppercase">
         Địa chỉ email
       </span>

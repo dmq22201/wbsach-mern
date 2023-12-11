@@ -8,36 +8,17 @@ import {
   HiOutlineSun,
 } from "react-icons/hi2";
 import { EmptyAvatar } from "./Icons";
-import { useEffect, useState } from "react";
 
 import Button from "./Button";
 import Avatar from "./Avatar";
 import Menu from "./Menu";
-
-const menuItems = [{}];
+import Switch from "./Switch";
+import { useContext } from "react";
+import { ThemeContext } from "./Theme";
 
 function Navbar({ currentUser, handleLogout }) {
   const navigate = useNavigate();
-
-  const [theme, setTheme] = useState(
-    JSON.parse(localStorage.getItem("theme")) ?? "light",
-  );
-
-  const handleTheme = () => {
-    setTheme((currentTheme) => (currentTheme === "light" ? "dark" : "light"));
-  };
-
-  useEffect(() => {
-    if (theme === "light") {
-      document.body.classList.remove("dark");
-    }
-
-    if (theme === "dark") {
-      document.body.classList.add("dark");
-    }
-
-    localStorage.setItem("theme", JSON.stringify(theme));
-  }, [theme]);
+  const { theme, handleTheme } = useContext(ThemeContext);
 
   return (
     <nav className="flex h-20 items-center justify-between gap-6">
@@ -49,7 +30,7 @@ function Navbar({ currentUser, handleLogout }) {
                 <Menu.Toggle id="navbar-menu">
                   <div className="flex items-center gap-2 leading-[5rem]">
                     {!currentUser.avatar ? (
-                      <EmptyAvatar size="xs" />
+                      <EmptyAvatar size="md" />
                     ) : (
                       <Avatar currentUser={currentUser} size="md" />
                     )}
@@ -89,13 +70,18 @@ function Navbar({ currentUser, handleLogout }) {
                     </Menu.Item>
                     <Menu.Item toCloseMenu={false}>
                       <div className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700">
-                        <div className="flex items-center gap-2">
-                          {theme === "light" ? (
-                            <HiOutlineSun className="h-4 w-4" />
-                          ) : (
-                            <HiMiniMoon className="h-4 w-4 text-yellow-500" />
-                          )}
-                          <span>Giao diện tối</span>
+                        <div className="flex w-full justify-between">
+                          <div className="flex items-center gap-2">
+                            {theme === "light" ? (
+                              <HiOutlineSun className="h-4 w-4" />
+                            ) : (
+                              <HiMiniMoon className="h-4 w-4 text-yellow-500" />
+                            )}
+                            <span>
+                              Giao diện: {theme === "dark" ? "Tối" : "Sáng"}
+                            </span>
+                          </div>
+                          <Switch handleFn={handleTheme} val={theme} />
                         </div>
                         <div>
                           <label

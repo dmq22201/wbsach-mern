@@ -36,7 +36,7 @@ function ForgotForm() {
   };
 
   return (
-    <div className="mx-auto w-fit rounded-lg bg-white p-10 shadow-md dark:bg-slate-800 dark:text-white">
+    <div className="mx-auto w-full rounded-lg bg-white p-10 shadow-md dark:bg-slate-800 dark:text-white md:w-[36.75rem]">
       <Form
         onSubmit={handleSubmit(onSubmit)}
         headingText="Quên tài khoản và mật khẩu"

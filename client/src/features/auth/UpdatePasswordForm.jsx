@@ -26,7 +26,7 @@ function UpdatePasswordForm() {
     },
   });
 
-  const [sendUpdateSecurityPassword, { isLoading, isSuccess }] =
+  const [sendUpdateSecurityPassword, { isLoading, isSuccess, isError }] =
     useSendUpdateSecurityPasswordMutation();
 
   const [msgFromServer, setMsgFromServer] = useState(null);
@@ -55,6 +55,13 @@ function UpdatePasswordForm() {
 
   return (
     <div className="flex w-full flex-col gap-6">
+      {isDirty && !isError && !isSuccess && null}
+      {!isDirty && !isError && isSuccess && (
+        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
+      )}
+      {isDirty && isError && !isSuccess && (
+        <InputMsg msgFromServer={msgFromServer} isFromServer={true} />
+      )}
       <span className="font-roboto text-xl font-semibold uppercase">
         Mật khẩu
       </span>
