@@ -12,9 +12,7 @@ function Avatar({ currentUser, size }) {
     big: "w-28 h-28",
   };
 
-  return !currentUser.avatar ? (
-    <EmptyAvatar size={size} />
-  ) : (
+  return (
     <img
       src={currentUser.avatar}
       className={`${generalClass} ${sizes[size]}`}

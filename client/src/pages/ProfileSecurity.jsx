@@ -1,4 +1,4 @@
-import DeleteAccountForm from "../features/auth/DeleteAccountForm";
+import DeleteAccountButton from "../features/auth/DeleteAccountButton";
 import EmailForm from "../features/auth/EmailForm";
 import UpdatePasswordForm from "../features/auth/UpdatePasswordForm";
 
@@ -7,7 +7,7 @@ function ProfileSecurity() {
     <div className="divide flex flex-col gap-10">
       <EmailForm />
       <UpdatePasswordForm />
-      <DeleteAccountForm />
+      <DeleteAccountButton />
     </div>
   );
 }

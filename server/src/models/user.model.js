@@ -91,8 +91,30 @@ const userSchema = new mongoose.Schema(
       enum: ["Nam", "Nữ", "Không tiết lộ"],
     },
     shippingAddress: {
-      type: String,
-      trim: true,
+      type: [
+        {
+          address: {
+            type: String,
+            trim: true,
+          },
+          phoneNumber: {
+            type: String,
+            trim: true,
+            validate: {
+              validator(fieldValue) {
+                return REGEX_PHONENUMBER.test(fieldValue);
+              },
+              message: "Số điện thoại không hợp lệ. Gồm 10 số VD: 0123456789",
+            },
+          },
+        },
+      ],
+      validate: {
+        validator(fieldValue) {
+          return fieldValue.length <= 4;
+        },
+        message: "Bạn chỉ được phép thêm tối đa 4 địa chỉ giao hàng",
+      },
     },
     phoneNumber: {
       type: String,

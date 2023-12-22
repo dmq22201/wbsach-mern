@@ -11,12 +11,7 @@ const compression = require("compression");
 
 const CustomError = require("./utils/CustomError.util");
 const globalErrorHandler = require("./middlewares/globalErrorHandler.middleware.js");
-const conn = require("./db/conn.js");
-const bookRouter = require("./routes/book.route");
-const userRouter = require("./routes/user.route");
-const genreRouter = require("./routes/genre.route");
-const authorRouter = require("./routes/author.route");
-const authRouter = require("./routes/auth.route.js");
+const mongodb_connect = require("./db/mongodb.js");
 const corsOptions = require("./configs/corsOptions.config.js");
 
 // Khởi tạo Application
@@ -56,18 +51,15 @@ app.use(mongoSanitize());
 app.use(compression());
 
 // Kết nối Database
-conn();
+mongodb_connect();
 
 // Routes
 app.get("/", (req, res) => {
   // Trả về file 'index.html' từ thư mục 'public'
   res.sendFile(path.join(__dirname, "../public", "index.html"));
 });
-app.use("/api/v1/books", bookRouter);
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/genres", genreRouter);
-app.use("/api/v1/authors", authorRouter);
-app.use("/api/v1/auth", authRouter);
+
+app.use(require("./routes/"));
 
 app.all("*", (req, res, next) => {
   next(new CustomError(`Không tìm thấy ${req.originalUrl} trên máy chủ!`, 404));

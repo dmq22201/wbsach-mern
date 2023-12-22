@@ -6,7 +6,7 @@ class APIFeature {
 
   filter() {
     const queryObj = { ...this.queryStrFromReq };
-    const excludedFields = ["page", "sort", "limit", "fields"];
+    const excludedFields = ["page", "sortby", "limit", "fields"];
     excludedFields.forEach((field) => delete queryObj[field]);
 
     let queryStr = JSON.stringify(queryObj);
@@ -20,8 +20,8 @@ class APIFeature {
   }
 
   sort() {
-    if (this.queryStrFromReq.sort) {
-      const sortby = this.queryStrFromReq.sort.split(",").join("");
+    if (this.queryStrFromReq.sortby) {
+      const sortby = this.queryStrFromReq.sortby.split(",").join("");
       this.queryObjFromMongoose = this.queryObjFromMongoose.sort(sortby); // chaining methods
     } else {
       this.queryObjFromMongoose = this.queryObjFromMongoose.sort("-createdAt"); // sắp xếp giảm dần

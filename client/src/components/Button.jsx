@@ -7,15 +7,13 @@ function Button({
   to,
   component,
   canSubmit = true,
-  onClick,
   isLoading = false,
-  toCloseModal = false,
   Icon,
   disabled,
   isRoundedFull = false,
   ...props
 }) {
-  const generalClass = `cursor-pointer px-6 py-2 font-medium focus:outline-none disabled:cursor-not-allowed flex gap-2 items-center justify-center text-xs sm:text-base transition-all w-auto uppercase  ${
+  const generalClass = `cursor-pointer px-6 py-2 font-medium focus:outline-none disabled:cursor-not-allowed flex gap-2 items-center justify-center text-xs sm:text-base transition-all w-fit flex items-center gap-2 ${
     isRoundedFull ? "rounded-full px-2 py-2" : "rounded-lg"
   }`;
 
@@ -53,7 +51,6 @@ function Button({
   if (component === "button") {
     return (
       <button
-        onClick={onClick}
         disabled={disabled}
         type={canSubmit ? "submit" : "button"}
         className={`${generalClass} ${types[type]}`}

@@ -28,6 +28,10 @@ const bookSchema = new mongoose.Schema(
     slug: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ["inStock", "outOfStock"],
+    },
     genres: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -64,6 +68,23 @@ bookSchema.virtual("reviews", {
 bookSchema.pre("save", function (next) {
   this.slug = generateSlug(this.name);
   next();
+});
+
+bookSchema.pre("save", function (next) {
+  if (this.stockQuantity <= 0) {
+    this.status = "outOfStock";
+  }
+
+  if (this.stockQuantity > 0) {
+    this.status = "inStock";
+  }
+
+  next();
+});
+
+// ! Query Middleware
+bookSchema.post("find", function (docs) {
+  this.totalItems = docs.length;
 });
 
 const Book = mongoose.model("Book", bookSchema);

@@ -9,7 +9,7 @@ import { genreApiSlice } from "./features/genres/genreApiSlice.js";
 import { authorApiSlice } from "./features/authors/authorApiSlice.js";
 import Theme from "./components/Theme.jsx";
 
-store.dispatch(bookApiSlice.endpoints.getBooks.initiate());
+// store.dispatch(bookApiSlice.endpoints.getBooks.initiate());
 store.dispatch(genreApiSlice.endpoints.getGenres.initiate());
 store.dispatch(authorApiSlice.endpoints.getAuthors.initiate());
 

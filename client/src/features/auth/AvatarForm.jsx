@@ -10,6 +10,7 @@ import InputMsg from "../../components/InputMsg";
 import Button from "../../components/Button";
 import Avatar from "../../components/Avatar";
 import Input from "../../components/Input";
+import { EmptyAvatar } from "../../components/Icons";
 
 function AvatarForm() {
   const {
@@ -65,7 +66,14 @@ function AvatarForm() {
         Ảnh đại diện
       </span>
       <div className="flex flex-col items-center gap-8 md:flex-row">
-        <Avatar currentUser={currentUser} size="big" />
+        {!currentUser.avatar && (
+          <div
+            className={`flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-gray-100 p-2 dark:bg-gray-600`}
+          >
+            <EmptyAvatar size="xl" />
+          </div>
+        )}
+        {currentUser.avatar && <Avatar currentUser={currentUser} size="big" />}
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col items-start gap-2">

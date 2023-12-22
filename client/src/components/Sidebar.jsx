@@ -73,10 +73,12 @@ function Content({ children }) {
   if (!showSidebar) return null;
 
   return (
-    <div className="fixed inset-0 z-10 h-screen w-screen bg-black/30 backdrop-blur-sm">
+    <div
+      className={`fixed inset-0 z-10 h-screen w-screen bg-black/30 backdrop-blur-sm`}
+    >
       <div
         ref={ref}
-        className="fixed bottom-0 right-0 top-0 w-[60vw] overflow-auto bg-white shadow dark:bg-slate-800"
+        className={`fixed bottom-0 right-0 top-0 w-[60vw] overflow-auto bg-white shadow dark:bg-slate-800`}
       >
         <div className="flex h-screen flex-col divide-y dark:divide-slate-700">
           <div className="flex items-center px-4 py-5">
@@ -85,7 +87,7 @@ function Content({ children }) {
             </button>
           </div>
 
-          <div className="flex h-full flex-col divide-y dark:divide-slate-700">
+          <div className="flex h-screen flex-col divide-y text-xs dark:divide-slate-700 md:text-base">
             {children}
           </div>
         </div>
@@ -112,9 +114,7 @@ function Item({ children, hasDropdown, toCloseSidebar = true }) {
   return (
     <div
       onClick={handleClick}
-      className={`w-full text-sm md:text-base ${
-        hasDropdown && hasDropdownClass
-      }`}
+      className={`w-full ${hasDropdown && hasDropdownClass}`}
     >
       {children}
     </div>
@@ -128,7 +128,7 @@ function DropdownToggle({ children }) {
     <button className="flex items-center">
       {children}
       <HiMiniChevronDown
-        className={`h-5 w-5 transition-all ${
+        className={`h-5 w-5 transition-[transform] duration-[350ms] ${
           showDropdown ? "rotate-180" : "rotate-0"
         }`}
       />
@@ -142,7 +142,7 @@ function DropdownContent({ children }) {
   if (!showDropdown) return null;
 
   return (
-    <div key="dropdownContent" className="bg-gray-100 dark:bg-slate-700">
+    <div key="dropdownContent" className={`bg-gray-100 dark:bg-slate-700`}>
       {children}
     </div>
   );

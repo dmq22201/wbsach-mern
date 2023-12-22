@@ -5,7 +5,7 @@ function Profile() {
   const { data, isFetching, isSuccess } = useGetProfileQuery();
 
   return (
-    <div className="flex min-h-screen w-full flex-col gap-10 divide-y rounded-lg bg-white p-10 dark:divide-slate-700 dark:bg-slate-800 lg:grid lg:grid-cols-[17.625rem,1fr] lg:divide-x lg:divide-y-0">
+    <div className="flex min-h-screen w-full flex-col gap-10 divide-y rounded-lg bg-white p-4 dark:divide-slate-700 dark:bg-slate-800 md:p-10 lg:grid lg:grid-cols-[17.625rem,1fr] lg:divide-x lg:divide-y-0">
       <div className="flex flex-shrink-0 snap-x snap-mandatory gap-4 overflow-x-auto lg:flex-col">
         <NavLink
           to="information"

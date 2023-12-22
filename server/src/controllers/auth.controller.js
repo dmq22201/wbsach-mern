@@ -107,6 +107,7 @@ exports.login = asyncFnHandler(async function (req, res, next) {
       phoneNumber: foundUserInDB.phoneNumber,
       gender: foundUserInDB.gender,
       createdAt: foundUserInDB.createdAt,
+      shippingAddress: foundUserInDB.shippingAddress,
     },
   });
 });
@@ -162,10 +163,6 @@ exports.register = asyncFnHandler(async function (req, res, next) {
 
   req.newUser = newUser;
 
-  // res.status(200).json({
-  //   status: "success",
-  //   message: "Đăng ký thành công",
-  // });
   next();
 });
 
@@ -367,6 +364,7 @@ exports.refresh = asyncFnHandler(async function (req, res, next) {
           phoneNumber: foundUserInDB.phoneNumber,
           gender: foundUserInDB.gender,
           createdAt: foundUserInDB.createdAt,
+          shippingAddress: foundUserInDB.shippingAddress,
         },
       });
     }
@@ -581,8 +579,15 @@ exports.updateSecurityEmail = asyncFnHandler(async function (req, res, next) {
 
 // Chức năng: Cung cấp thông tin  về tài khoản cho trang profile
 exports.profile = asyncFnHandler(async function (req, res, next) {
-  const { fullName, phoneNumber, gender, email, avatar, createdAt } =
-    req.currentUser;
+  const {
+    fullName,
+    phoneNumber,
+    gender,
+    email,
+    avatar,
+    createdAt,
+    shippingAddress,
+  } = req.currentUser;
 
   res.status(200).json({
     status: "success",
@@ -593,6 +598,7 @@ exports.profile = asyncFnHandler(async function (req, res, next) {
       gender,
       email,
       createdAt,
+      shippingAddress,
     },
   });
 });
@@ -658,4 +664,72 @@ exports.uploadAvatar = asyncFnHandler(async function (req, res, next) {
   } catch (err) {
     console.log(err);
   }
+});
+
+// Chức năng: CRUD danh sách địa chỉ nhận hàng
+exports.addShippingAddress = asyncFnHandler(async function (req, res, next) {
+  const { address, phoneNumber } = req.body;
+
+  if (!address || !phoneNumber) {
+    return next(
+      new CustomError("Vui lòng cung cấp địa chỉ và số điện thoại", 400)
+    );
+  }
+
+  let newShippingAddressArrInDB = [];
+
+  newShippingAddressArrInDB = [
+    ...req.currentUser.shippingAddress,
+    { address, phoneNumber },
+  ];
+
+  req.currentUser.shippingAddress = newShippingAddressArrInDB;
+
+  await req.currentUser.save({ validateModifiedOnly: true });
+
+  res.status(200).json({
+    status: "success",
+    message: "Thêm thành công",
+  });
+});
+
+exports.updateShippingAddress = asyncFnHandler(async function (req, res, next) {
+  const { _id, address, phoneNumber } = req.body;
+
+  if (!address || !phoneNumber) {
+    return next(
+      new CustomError("Vui lòng cung cấp địa chỉ và số điện thoại", 400)
+    );
+  }
+
+  const findIndexObj = req.currentUser.shippingAddress.findIndex(
+    (el) => el._id.toString() === _id
+  );
+
+  req.currentUser.shippingAddress[findIndexObj] = {
+    ...req.currentUser.shippingAddress[findIndexObj],
+    address,
+    phoneNumber,
+  };
+
+  await req.currentUser.save({ validateModifiedOnly: true });
+
+  res.status(200).json({
+    status: "success",
+    message: "Sửa thành công",
+  });
+});
+
+exports.deleteShippingAddress = asyncFnHandler(async function (req, res, next) {
+  const newShippingAddressArrInDB = req.currentUser.shippingAddress.filter(
+    (el) => el._id.toString() !== req.body._id
+  );
+
+  req.currentUser.shippingAddress = newShippingAddressArrInDB;
+  await req.currentUser.save({ validateModifiedOnly: true });
+
+  res.status(200).json({
+    status: "success",
+    message: "Xóa thành công",
+  });
 });

@@ -3,6 +3,7 @@ function InputGroup({ children, isHorizontal, isVertical = true }) {
     return (
       <div className="flex flex-col gap-2 dark:text-gray-100">{children}</div>
     );
+
   if (isHorizontal)
     return <div className="flex gap-2 dark:text-gray-100">{children}</div>;
 }

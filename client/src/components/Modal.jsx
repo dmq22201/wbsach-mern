@@ -50,12 +50,16 @@ function Window({ id, children, isCloseWhenClickOuside = true }) {
   if (showModalWithId !== id) return null;
 
   return (
-    <div className="fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm">
+    <div
+      className={`fixed inset-0 z-10 flex h-full w-full items-center justify-center overflow-hidden bg-black/30 backdrop-blur-sm`}
+    >
       <div
         ref={ref}
-        className="fixed overflow-hidden rounded-lg bg-white p-6 shadow-md dark:bg-slate-800 "
+        className={`fixed overflow-hidden rounded-lg bg-white p-6 shadow-md dark:bg-slate-800`}
       >
-        {children}
+        {React.cloneElement(children, {
+          onCloseModal: closeModal,
+        })}
       </div>
     </div>
   );
@@ -65,13 +69,8 @@ function Action({ children }) {
   const { closeModal } = useContext(ModalContext);
   return (
     <div className="flex gap-6">
-      {React.Children.map(children, (child) => {
-        if (child.props.toCloseModal === true) {
-          return React.cloneElement(child, {
-            onClick: () => closeModal(),
-          });
-        }
-        return child;
+      {React.cloneElement(children, {
+        onCloseModal: closeModal,
       })}
     </div>
   );

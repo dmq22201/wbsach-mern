@@ -16,6 +16,7 @@ function handleDuplicateErrorDB(err) {
 }
 
 function handleValidationErrorDB(err) {
+  console.log(err);
   const errors = Object.values(err.errors).map((err) => err.message);
   const msg = `Dữ liệu nhập không hợp lệ với yêu cầu của chúng tôi. ${errors.join(
     ""

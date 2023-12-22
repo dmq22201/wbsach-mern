@@ -6,6 +6,7 @@ import {
   HiOutlinePower,
   HiMiniMoon,
   HiOutlineSun,
+  HiOutlineShoppingCart,
 } from "react-icons/hi2";
 import { EmptyAvatar } from "./Icons";
 
@@ -21,7 +22,7 @@ function Navbar({ currentUser, handleLogout }) {
   const { theme, handleTheme } = useContext(ThemeContext);
 
   return (
-    <nav className="flex h-20 items-center justify-between gap-6">
+    <nav className="flex h-20 items-center justify-between gap-10">
       {currentUser ? (
         <>
           <div className="flex flex-col justify-center">
@@ -29,10 +30,15 @@ function Navbar({ currentUser, handleLogout }) {
               <Menu>
                 <Menu.Toggle id="navbar-menu">
                   <div className="flex items-center gap-2 leading-[5rem]">
-                    {!currentUser.avatar ? (
-                      <EmptyAvatar size="md" />
-                    ) : (
-                      <Avatar currentUser={currentUser} size="md" />
+                    {!currentUser.avatar && (
+                      <div
+                        className={`flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-gray-100 p-2 dark:bg-gray-600`}
+                      >
+                        <EmptyAvatar size="xs" />
+                      </div>
+                    )}
+                    {currentUser.avatar && (
+                      <Avatar currentUser={currentUser} size="lg" />
                     )}
                     <span className="font-semibold capitalize text-gray-400 transition-colors hover:text-black dark:hover:text-white">
                       {currentUser.fullName}
@@ -44,7 +50,7 @@ function Navbar({ currentUser, handleLogout }) {
                     <Menu.Item>
                       <Link
                         to="/profile"
-                        className="flex items-center gap-2 rounded-t-lg p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700"
+                        className="flex items-center gap-2 rounded-t-lg p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-600"
                       >
                         <HiOutlineUserCircle className="h-4 w-4" />
                         Chỉnh sửa hồ sơ
@@ -53,7 +59,7 @@ function Navbar({ currentUser, handleLogout }) {
                     <Menu.Item>
                       <Link
                         to="/profile/security"
-                        className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700"
+                        className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-600"
                       >
                         <HiOutlineLockClosed className="h-4 w-4" />
                         Bảo mật
@@ -62,14 +68,14 @@ function Navbar({ currentUser, handleLogout }) {
                     <Menu.Item>
                       <Link
                         to="/profile/order-history"
-                        className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700"
+                        className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-600"
                       >
                         <HiOutlineClock className="h-4 w-4" />
                         Lịch sử mua hàng
                       </Link>
                     </Menu.Item>
                     <Menu.Item toCloseMenu={false}>
-                      <div className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-700">
+                      <div className="flex items-center gap-2 p-4 transition-all hover:bg-gray-50 dark:hover:bg-slate-600">
                         <div className="flex w-full justify-between">
                           <div className="flex items-center gap-2">
                             {theme === "light" ? (
@@ -106,6 +112,16 @@ function Navbar({ currentUser, handleLogout }) {
                 </Menu.List>
               </Menu>
             </div>
+          </div>
+          <div>
+            <Menu>
+              <Menu.Toggle
+                id="cart-menu"
+                className="rounded-full p-4 transition-all hover:dark:bg-slate-700"
+              >
+                <HiOutlineShoppingCart className="text-xl" />
+              </Menu.Toggle>
+            </Menu>
           </div>
         </>
       ) : (

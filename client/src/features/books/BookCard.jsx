@@ -5,21 +5,21 @@ function BookCard({ book }) {
   return (
     <Link
       to={`${book.slug}`}
-      className="flex flex-col gap-6 border p-6 shadow-md transition-all hover:scale-105 hover:shadow-xl"
+      className="flex flex-col gap-6 rounded-lg border shadow-md transition-all hover:scale-105 hover:shadow-xl dark:border-slate-700"
     >
       <div>
         <img
           src={book.coverImage}
           alt={book.name}
-          className="m-auto h-60 w-full"
+          className="m-auto h-80 w-full rounded-lg"
         />
       </div>
-      <div className="mt-auto flex flex-col gap-2">
+      {/* <div className="mt-auto flex flex-col gap-2">
         <p className="font-medium">{book.name}</p>
         <p className="md:text-md text-sm font-semibold text-red-500">
           {formatCurrency(book.price)}
         </p>
-      </div>
+      </div> */}
     </Link>
   );
 }

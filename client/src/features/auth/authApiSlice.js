@@ -118,6 +118,30 @@ const authApiSlice = apiSlice.injectEndpoints({
         body: email,
       }),
     }),
+    sendNewShippingAddress: builder.mutation({
+      query: (shippingAddress) => ({
+        url: "/api/v1/auth/profile/shipping-address",
+        method: "POST",
+        body: shippingAddress,
+      }),
+      invalidatesTags: ["CurrentUser"],
+    }),
+    sendDeleteShippingAddress: builder.mutation({
+      query: (shippingAddress) => ({
+        url: "/api/v1/auth/profile/shipping-address",
+        method: "DELETE",
+        body: shippingAddress,
+      }),
+      invalidatesTags: ["CurrentUser"],
+    }),
+    sendUpdateShippingAddress: builder.mutation({
+      query: (shippingAddress) => ({
+        url: "/api/v1/auth/profile/shipping-address",
+        method: "PATCH",
+        body: shippingAddress,
+      }),
+      invalidatesTags: ["CurrentUser"],
+    }),
   }),
 });
 
@@ -137,4 +161,7 @@ export const {
   useSendUpdateSecurityEmailMutation,
   useGetVerifyEmailTokenQuery,
   useSendVerifyEmailMutation,
+  useSendNewShippingAddressMutation,
+  useSendDeleteShippingAddressMutation,
+  useSendUpdateShippingAddressMutation,
 } = authApiSlice;
