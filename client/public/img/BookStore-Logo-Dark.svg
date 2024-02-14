@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 103.36 86.51">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: Roboto-Bold, Roboto;
+        font-size: 12px;
+        font-weight: 700;
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-4, .cls-5 {
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: .25px;
+      }
+
+      .cls-5 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g id="BookStore-Logo-Dark">
+      <line class="cls-5" x1="14.18" y1="34.25" x2="14.18" y2="27.99"/>
+      <line class="cls-5" x1="89.25" y1="28.14" x2="89.25" y2="35.05"/>
+      <rect class="cls-2" x="37.54" y="85.09" width="28.35" height="1.42"/>
+      <path class="cls-2" d="m12.28,81.64l-4.18-9.88s24.88-.07,41.6,10.46c0,0-23.95-18.11-47.91-15.34l10.49,14.76Z"/>
+      <path class="cls-2" d="m91.16,81.64l4.18-9.88s-24.88-.07-41.6,10.46c0,0,23.95-18.11,47.91-15.34l-10.49,14.76Z"/>
+      <path class="cls-2" d="m1.79,41.02s44.06-26.38,99.86,0c0,0-47.91-34.04-99.86,0Z"/>
+      <polygon class="cls-4" points="51.59 .28 2.27 33.94 51.59 9.78 51.59 .28"/>
+      <polygon class="cls-2" points="51.72 0 101.16 33.94 51.72 9.86 51.72 0"/>
+      <path class="cls-2" d="m5.09,63.23l-5.09-7.45s22.81-8.29,48.62,22.64c0,0-18.91-20.13-43.53-15.19Z"/>
+      <path class="cls-2" d="m98.28,63.23l5.09-7.45s-22.81-8.29-48.62,22.64c0,0,18.91-20.13,43.53-15.19Z"/>
+      <text class="cls-1" transform="translate(15.64 49.6)"><tspan x="0" y="0">BOOK S</tspan><tspan class="cls-3" x="42.21" y="0">T</tspan><tspan x="49.47" y="0">ORE</tspan></text>
+    </g>
+  </g>
+</svg>

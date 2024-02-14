@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
+    title= subject  
+    include _style
+  body
+    table(role="presentation", border="0", cellpadding="0", cellspacing="0", class="body")
+      tr
+        td
+        td(class="container")
+          div(class="content")
+            // START CENTERED WHITE CONTAINER
+            table(role="presentation", class="main")
+              // START MAIN CONTENT AREA
+              tr
+                td(class="wrapper")
+                  table(role="presentation", border="0", cellpadding="0", cellspacing="0")
+                    tr
+                      td
+                        p Xin chào, 
+                          span(class="font-semibold") #{fullName}
+                        p Lời mở đầu, Chúc mừng bạn đã đăng ký thành công tài khoản tại Web Bán Sách.
+                        p Hiện tại, tài khoản của bạn chưa xác minh email. Để có thể sử dụng được dịch vụ chúng tôi, bạn cần phải ấn nút phía dưới. Thời hạn là 1 tiếng. 
+                        table(role="presentation", border="0", cellpadding="0", cellspacing="0", class="btn btn-primary")
+                          tbody
+                            tr
+                              td(align="left")
+                                table(role="presentation", border="0", cellpadding="0", cellspacing="0")
+                                  tbody
+                                    tr
+                                      td
+                                        a(href=`${url}`, target="_blank" class="uppercase") Xác minh email
+                        p(class="text-red-500 font-semibold") CHÚ Ý: Nếu vượt quá thời hạn cho phép (1 tiếng) bạn có thể sử dụng chức năng gửi lại email xác thực.
+              // END MAIN CONTENT AREA
+            // END CENTERED WHITE CONTAINER
+        td
