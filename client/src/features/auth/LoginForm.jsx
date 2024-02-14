@@ -18,7 +18,12 @@ function LoginForm() {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      username: "test_user",
+      password: "@Aa123",
+    },
+  });
 
   const [sendLogin, { isLoading, isSuccess }] = useSendLoginMutation();
   const [msgFromServer, setMsgFromServer] = useState(null);
