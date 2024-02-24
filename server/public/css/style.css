@@ -3,27 +3,44 @@
 *::after {
   box-sizing: border-box;
 }
-
 * {
   margin: 0;
   padding: 0;
   font: inherit;
 }
-
+html {
+  color-scheme: dark light;
+  font-family: "Montserrat", sans-serif;
+}
 body {
+  font-size: 62.5%;
   min-height: 100vh;
+  background: #41295a; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #2f0743,
+    #41295a
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2f0743,
+    #41295a
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: black;
-  color: white;
-  font-size: 8rem;
+  color: #fff;
 }
-
 img,
 picture,
 svg,
 video {
   display: block;
   max-width: 100%;
+}
+
+a {
+  font-size: 4rem;
+  color: white;
 }

@@ -4,7 +4,7 @@
 
 - [ExpressJS Framework][expressjs]: Đảm nhiệm chính của Back-End
 - [MongoDB][mongodb]: Cơ sở dữ liệu
-- [PostgreSQL for ExpressJS][mongoose]: Kết nối mongoose với ExpressJS
+- [Mongoose for ExpressJS][mongoose]: Kết nối mongoose với ExpressJS
 - [Morgan][morgan]: logs các request, response
 
 [expressjs]: https://expressjs.com/

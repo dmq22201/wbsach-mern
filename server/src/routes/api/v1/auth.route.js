@@ -41,6 +41,7 @@ router
 router
   .route("/verify-email/:emailVerifyToken")
   .get(verifyEmailToken, authController.verifyingEmail);
+
 router.route("/refresh").get(authController.refresh);
 router
   .route("/forgot")
